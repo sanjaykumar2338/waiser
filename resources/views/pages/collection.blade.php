@@ -190,4 +190,25 @@
 			</div>
 	</div>
 	</div>
+
+	<div class="image-gallery d-flex">
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-1.jpg')}}"/>
+		</div>
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-2.jpg')}}"/>
+		</div>
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-3.jpg')}}"/>
+		</div>
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-4.jpg')}}"/>
+		</div>
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-5.jpg')}}"/>
+		</div>
+		<div class="img-bx">
+			<img src="{{ asset('public/assests/images/img-6.jpg')}}"/>
+		</div>
+	</div>  
 @stop

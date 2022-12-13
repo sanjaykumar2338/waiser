@@ -121,7 +121,7 @@
 		</div>
 	</div>
 
-	<div class="image-gallery d-flex flex-wrap">
+	<div class="image-gallery d-flex">
 		<div class="img-bx">
 			<img src="{{ asset('public/assests/images/img-1.jpg')}}"/>
 		</div>
