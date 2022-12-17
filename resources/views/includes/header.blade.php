@@ -1,10 +1,16 @@
 <div class="header">
 	<div class="top-bar">
 			<div class="container">
+				@if(Session::has('user_id'))
 				<ul class="d-flex flex-wrap align-itmes-center justify-content-end">
 					<li><a href="#">MI CUENTA</a></li>
-					<li><a href="#">SALIR</a></li>
+					<li><a href="{{url('/')}}/logout">SALIR</a></li>
 				</ul>
+				@else
+				<ul class="d-flex flex-wrap align-itmes-center justify-content-end">
+					<li><a href="{{url('/')}}/login">Acceso</a></li>
+				</ul>
+				@endif
 			</div>
 	</div>
 	<div class="navigation">
@@ -33,3 +39,7 @@
 			</div>
 	</div>
 </div>
+
+@if (Session::has('message'))
+   <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif

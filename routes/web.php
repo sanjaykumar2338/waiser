@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/home', [HomeController::class, 'home']);
 Route::get('/checkout', [HomeController::class, 'checkout']);
 Route::get('/product', [HomeController::class, 'product']);
 Route::get('/pago', [HomeController::class, 'pago']);
@@ -22,5 +23,7 @@ Route::get('/collection', [HomeController::class, 'collection']);
 Route::get('/intergrantes', [HomeController::class, 'intergrantes']);
 Route::get('/mi-cuenta', [HomeController::class, 'mi_cuenta']);
 Route::get('/mis-inscripciones', [HomeController::class, 'mis_inscripciones']);
-Route::get('/login', [HomeController::class, 'login']);
 Route::get('/forget', [HomeController::class, 'forget']);
+Route::get('/login', [HomeController::class, 'login']);
+Route::post('/login_submit', [HomeController::class, 'login_submit']);
+Route::get('/logout', [HomeController::class, 'logout']);

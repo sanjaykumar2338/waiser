@@ -8,11 +8,12 @@
 						<img class="lgn-logo hide-mb" src="{{ asset('public/assests/images/logo.svg')}}">
 						<h3 class="hide-mb">Ingresar</h3>
 						<h3 class="hide-ds"><span>Inscripción a Cursos</span> Acceder</h3>
-						<form>
+						<form name="login_frm" method="post" action="{{url('/login_submit')}}">
+							@csrf
 							<div class="lgn-field">
 								<label class="hide-mb">Email</label>
 								<div class="lg-ff">
-									<input type="text" placeholder="Ingresa tu correo electrónico,  o número de socio">
+									<input name="email" type="text" placeholder="Ingresa tu correo electrónico,  o número de socio">
 									<img class="lg-lft-ic hide-mb" src="{{ asset('public/assests/images/message 1.svg')}}">
 								</div>
 								<div class="tx-hg hide-mb">Recuperar el correo electrónico asociado a mi número de socio</div>
@@ -20,7 +21,7 @@
 							<div class="lgn-field">
 								<label class="hide-mb">Contraseña</label>
 								<div class="lg-ff">
-									<input type="text" placeholder="Ingresa tu contraseña">
+									<input name="password" type="text" placeholder="Ingresa tu contraseña">
 									<img class="lg-lft-ic hide-mb" src="{{ asset('public/assests/images/padlock 1.svg')}}">
 									<img class="lg-rgt-ic hide-mb" src="{{ asset('public/assests/images/invisible 1.svg')}}">
 								</div>
