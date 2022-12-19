@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\PasswordRecovery;
 use DB;
 use Session;
 use Redirect;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -80,10 +82,79 @@ class HomeController extends Controller
         return redirect('/home');
     }
 
+    public function recovery_by_email(Request $request){
+        
+
+        //$rec = DB::connection('sqlsrv')->select(DB::raw("exec xocdiRecupeEmail :socio"),[
+        //        ':socio' => $request->email
+        //]);
+
+        //echo "<pre>"; print_r($rec); die;
+
+        try{
+            $sql = "SELECT * FROM dbo.Cte where eMail1 = '$request->email' OR eMail2 = '$request->email'";
+            $rec = DB::connection('sqlsrv')->select($sql);
+            //echo "<pre>"; print_r($rec); die;
+
+            if($rec){
+                //echo "<pre>"; print_r($rec); die;
+                $email = $rec[0]->eMail1;
+                $body = [
+                    'Socio'=>$rec[0]->Socio,
+                    'Contrasena'=>$rec[0]->Contrasena,
+                    'Electronico'=>$rec[0]->eMail1,
+                    'Nombre'=>$rec[0]->Nombre
+                ];
+         
+                Mail::to($email)->send(new PasswordRecovery($body));
+                Session::flash('message', 'Recovery mail sent successfully!!!');
+                return redirect('/home');
+            }else{
+                Session::flash('message', 'No record found!!!');
+                return Redirect::back();
+            }
+
+        }catch(\Exceptions $e){
+            Session::flash('message', $e->getMessage());
+            return Redirect::back();
+        }    
+    }
+
+    public function recovery_by_socio(Request $request){
+
+        try{
+            $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+                ':socio' => $request->socio
+            ]);
+
+            if($rec){
+                //echo "<pre>"; print_r($rec); die;
+                $email = $rec[0]->Email;
+                $body = [
+                    'Socio'=>$rec[0]->Socio,
+                    'Contrasena'=>$rec[0]->Contrasena,
+                    'Electronico'=>$rec[0]->Email,
+                    'Nombre'=>$rec[0]->Nombre
+                ];
+         
+                Mail::to($email)->send(new PasswordRecovery($body));
+                Session::flash('message', 'Recovery mail sent successfully!!!');
+                return redirect('/home');
+            }else{
+                Session::flash('message', 'No record found!!!');
+                return Redirect::back();
+            }
+
+        }catch(\Exceptions $e){
+            Session::flash('message', $e->getMessage());
+            return Redirect::back();
+        }             
+    }
+
     public function login_submit(Request $request){
         //echo "<pre>"; print_r($request->all()); die;
         try{
-            $sql = "SELECT * FROM dbo.Ban1";
+            //$sql = "SELECT * FROM dbo.Ban1";
             $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiLoginSocios :Socio, :contrasena"),[
                 ':Socio' => $request->email,
                 ':contrasena' => $request->password

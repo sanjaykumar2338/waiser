@@ -27,3 +27,6 @@ Route::get('/forget', [HomeController::class, 'forget']);
 Route::get('/login', [HomeController::class, 'login']);
 Route::post('/login_submit', [HomeController::class, 'login_submit']);
 Route::get('/logout', [HomeController::class, 'logout']);
+
+Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
+Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
