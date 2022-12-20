@@ -88,29 +88,40 @@ class HomeController extends Controller
         //$rec = DB::connection('sqlsrv')->select(DB::raw("exec xocdiRecupeEmail :socio"),[
         //        ':socio' => $request->email
         //]);
-
         //echo "<pre>"; print_r($rec); die;
 
         try{
-            $sql = "SELECT * FROM dbo.Cte where eMail1 = '$request->email' OR eMail2 = '$request->email'";
-            $rec = DB::connection('sqlsrv')->select($sql);
+            //$sql = "SELECT * FROM dbo.Cte where eMail1 = '$request->email' OR eMail2 = '$request->email'";
+            //$rec = DB::connection('sqlsrv')->select($sql);
             //echo "<pre>"; print_r($rec); die;
+            $rec = DB::connection('sqlsrv')->select(DB::raw("exec xocdiRecupeEmail :socio"),[
+                ':socio' => $request->email
+            ]);
 
-            if($rec){
-                //echo "<pre>"; print_r($rec); die;
-                $email = $rec[0]->eMail1;
-                $body = [
-                    'Socio'=>$rec[0]->Socio,
-                    'Contrasena'=>$rec[0]->Contrasena,
-                    'Electronico'=>$rec[0]->eMail1,
-                    'Nombre'=>$rec[0]->Nombre
-                ];
-         
-                Mail::to($email)->send(new PasswordRecovery($body));
-                Session::flash('message', 'Recovery mail sent successfully!!!');
+            $rec2 = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+                ':socio' => $request->email
+            ]);
+            //echo "<pre>"; print_r($rec2); die;
+
+
+            if($rec && $rec2){
+                foreach($rec as $row){
+                    //echo "<pre>"; print_r($rec); die;
+                    $email = $row->Email;
+                    $body = [
+                        'Socio'=>$rec2[0]->Socio,
+                        'Contrasena'=>$rec2[0]->Contrasena,
+                        'Electronico'=>$rec2[0]->Email,
+                        'Nombre'=>$rec2[0]->Nombre
+                    ];
+             
+                    Mail::to($email)->send(new PasswordRecovery($body));
+                }
+
+                Session::flash('message', 'Correo de recuperación enviado con éxito.');
                 return redirect('/home');
             }else{
-                Session::flash('message', 'No record found!!!');
+                Session::flash('message', 'Ningún record fue encontrado.');
                 return Redirect::back();
             }
 
@@ -138,10 +149,10 @@ class HomeController extends Controller
                 ];
          
                 Mail::to($email)->send(new PasswordRecovery($body));
-                Session::flash('message', 'Recovery mail sent successfully!!!');
+                Session::flash('message', 'Correo de recuperación enviado con éxito.');
                 return redirect('/home');
             }else{
-                Session::flash('message', 'No record found!!!');
+                Session::flash('message', 'Ningún record fue encontrado.');
                 return Redirect::back();
             }
 
@@ -162,14 +173,14 @@ class HomeController extends Controller
 
             //echo "<pre>"; print_r($rec); die;            
             if($rec){
-                $message = 'Login successfully!!!';
+                $message = 'Inicie sesión con éxito.';
                 Session::put('user_id', $rec[0]->Socio);
                 Session::put('membresia', $rec[0]->Membresia);
                 //echo "<pre>"; print_r($rec); die;
                 Session::flash('message', $message);
                 return redirect('/home');
             }else{
-                $message = 'Login failed!!!';
+                $message = 'error de inicio de sesion.';
                 Session::flash('message', $message);
                 return redirect('/login');
             }

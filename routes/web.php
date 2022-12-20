@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,12 @@ Route::get('/logout', [HomeController::class, 'logout']);
 
 Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
+
+Route::get('/my_account', [UserController::class, 'my_account']);
+
+Route::get('send_test_email', function(){
+	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
+	{
+		$message->to('sk963070@gmail.com');
+	});
+});

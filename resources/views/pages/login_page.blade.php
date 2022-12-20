@@ -44,4 +44,9 @@
 			</div>
 		</div>
 </div>
+
+<script type="text/javascript">
+	$('.crt-btn').hide();
+</script>
+
 @stop

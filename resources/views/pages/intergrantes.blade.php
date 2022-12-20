@@ -9,21 +9,146 @@
 	<div class="intergrante-main">
 		<div class="container">
 			<div class="row">
-				<div class="cloumn-five">
-					<div class="intergrante-box">
-						<div class="intergrante-img">
-							<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+
+				@if($members)
+					@foreach($members as $member)
+						@if($member->Parentesco=='Titular')
+							<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>Nombre del papá: {{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
+							</div>
+						@endif
+						
+						@if(str_contains($member->Parentesco,'Conyuge'))
+							<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>Nombre del mamá: {{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
+							</div>
+						@endif
+
+						@if($member->Parentesco=="" OR $member->Sexo=="")
+							<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>{{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
+							</div>
+						@endif
+					@endforeach
+				@endif
+
+				@if($son_arr)
+					@foreach($son_arr as $key=>$member)
+						<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>Nombre del hijo {{$key+1}}: {{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
 						</div>
-						<div class="intergrante-contnet">
-							<h3>Nombre del papá</h3>
-							<p>Número de socio: 2111100</p>
-							<p>Edad:  40 años</p>
-							<p>Sexo: Masculino</p>
-							<a href="#">Seleccionar</a>
+					@endforeach
+				@endif
+
+				@if($daughter_arr)
+					@foreach($daughter_arr as $key=>$member)
+						<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>Nombre del hija {{$key+1}}: {{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
 						</div>
-					</div>
-				</div>
-				<div class="cloumn-five">
+					@endforeach
+				@endif
+
+				@if($sobrino)
+					@foreach($sobrino as $key=>$member)
+						<div class="cloumn-five">
+								<div class="intergrante-box">
+									<div class="intergrante-img">
+										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+									</div>
+									@php
+										$dob=date('Y', strtotime($member->FechaNacimiento));
+									    $diff = (date('Y') - $dob);
+									@endphp
+									<div class="intergrante-contnet">
+										<h3>Nombre del sobrino {{$key+1}}: {{$member->Nombre}}</h3>
+										<p>Número de socio: {{$member->Socio}}</p>
+										<p>Edad:  {{$diff}} años</p>
+										<p>Sexo: {{$member->Sexo}}</p>
+										<a href="#">Seleccionar</a>
+									</div>
+								</div>
+						</div>
+					@endforeach
+				@endif
+
+				
+
+				<div class="cloumn-five" style="display: none;">
 					<div class="intergrante-box">
 						<div class="intergrante-img">
 							<img src="{{ asset('public/assests/images/integra-2.jpg')}}"/>
@@ -37,7 +162,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="cloumn-five">
+				<div class="cloumn-five" style="display: none;">
 					<div class="intergrante-box">
 						<div class="intergrante-img">
 							<img src="{{ asset('public/assests/images/integra-3.jpg')}}"/>
@@ -51,7 +176,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="cloumn-five">
+				<div class="cloumn-five" style="display: none;">
 					<div class="intergrante-box">
 						<div class="intergrante-img">
 							<img src="{{ asset('public/assests/images/integra-4.jpg')}}"/>
@@ -65,7 +190,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="cloumn-five">
+				<div class="cloumn-five" style="display: none;">
 					<div class="intergrante-box">
 						<div class="intergrante-img">
 							<img src="{{ asset('public/assests/images/integra-5.jpg')}}"/>

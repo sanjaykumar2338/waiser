@@ -3,7 +3,7 @@
 			<div class="container">
 				@if(Session::has('user_id'))
 				<ul class="d-flex flex-wrap align-itmes-center justify-content-end">
-					<li><a href="#">MI CUENTA</a></li>
+					<li><a href="{{url('/')}}/my_account">MI CUENTA</a></li>
 					<li><a href="{{url('/')}}/logout">SALIR</a></li>
 				</ul>
 				@else
