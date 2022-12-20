@@ -7,6 +7,8 @@ use DB;
 use Session;
 use Redirect;
 use Mail;
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
 
 class UserController extends Controller
 {
@@ -45,7 +47,21 @@ class UserController extends Controller
         $sobrino = [];
 
         if($members){
-            foreach($members as $row){
+            foreach($members as $key=>$row){
+                //echo $row->Socio;echo "<br>";
+                //echo $this->get_image($row->Socio);echo "<br>";
+                //echo "<br>";
+                $url = $this->get_image($row->Socio.'.jpeg'); 
+                $members[$key]->image_url = $url;
+                $row->image_url = $url;
+
+                if(!$url){
+                    $url = $this->get_image($row->Socio.'.JPEG'); 
+                    $members[$key]->image_url = $url;
+                    $row->image_url = $url;
+                }
+                
+
                 if (str_contains($row->Parentesco, 'Hijo') && $row->Sexo=='Masculino') { 
                     $son_arr[] = $row;
                 }
@@ -60,11 +76,51 @@ class UserController extends Controller
             }
         }
 
+        //die;
+        //echo "<pre>"; print_r($son_arr); 
+        //echo "<pre>"; print_r($daughter_arr); 
+        //echo "<pre>"; print_r($sobrino); 
         //echo "<pre>"; print_r($members); die;
         return view('pages.intergrantes')->with('members',$members)->with('son_arr',$son_arr)->with('daughter_arr',$daughter_arr)->with('sobrino',$sobrino);
     }
 
     public function course_selection(Request $request){
         return view('pages.course_selection');
+    }
+
+    public function get_image($id){
+        try{
+            $s3Client = new S3Client([
+                'version'     => 'latest',
+                'region'      => 'us-east-1',
+                'credentials' => [
+                    'key'    => 'AKIARBV6JGDHUWPUDOMJ',
+                    'secret' => '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',
+                ],
+            ]);
+                
+            $bucket = 'socioscdifotos';
+            $key = $id;
+
+            $response = $s3Client->doesObjectExist($bucket,$key);
+            if($response){
+                $cmd = $s3Client->getCommand('GetObject', [
+                    'Bucket' => $bucket,
+                    'Key'    => $key
+                ]);
+
+                $request = $s3Client->createPresignedRequest($cmd, '+7 days');
+                if($request){
+                    $presignedUrl = (string) $request->getUri();
+                    return $presignedUrl; //die;
+                    //header("LOCATION: $presignedUrl");
+                    //die;
+                }
+
+                return '';
+            }
+          }catch(\Exception $e){
+            return '';
+        }
     }
 }

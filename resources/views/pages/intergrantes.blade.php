@@ -16,7 +16,11 @@
 							<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
@@ -37,7 +41,11 @@
 							<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
@@ -58,7 +66,11 @@
 							<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
@@ -82,7 +94,11 @@
 						<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
@@ -105,7 +121,11 @@
 						<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
@@ -128,7 +148,11 @@
 						<div class="cloumn-five">
 								<div class="intergrante-box">
 									<div class="intergrante-img">
-										<img src="{{ asset('public/assests/images/integra-1.jpg')}}"/>
+										@if($member->image_url=="")
+											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+										@else
+											<img src="{{ $member->image_url }}"/>
+										@endif
 									</div>
 									@php
 										$dob=date('Y', strtotime($member->FechaNacimiento));
