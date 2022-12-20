@@ -23,11 +23,11 @@
 									    $diff = (date('Y') - $dob);
 									@endphp
 									<div class="intergrante-contnet">
-										<h3>Nombre del papá: {{$member->Nombre}}</h3>
+										<h3>{{$member->Nombre}}</h3>
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 							</div>
@@ -44,11 +44,11 @@
 									    $diff = (date('Y') - $dob);
 									@endphp
 									<div class="intergrante-contnet">
-										<h3>Nombre del mamá: {{$member->Nombre}}</h3>
+										<h3>{{$member->Nombre}}</h3>
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 							</div>
@@ -69,7 +69,7 @@
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 							</div>
@@ -89,11 +89,11 @@
 									    $diff = (date('Y') - $dob);
 									@endphp
 									<div class="intergrante-contnet">
-										<h3>Nombre del hijo {{$key+1}}: {{$member->Nombre}}</h3>
+										<h3>{{$member->Nombre}}</h3>
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 						</div>
@@ -112,11 +112,11 @@
 									    $diff = (date('Y') - $dob);
 									@endphp
 									<div class="intergrante-contnet">
-										<h3>Nombre del hija {{$key+1}}: {{$member->Nombre}}</h3>
+										<h3>{{$member->Nombre}}</h3>
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 						</div>
@@ -135,11 +135,11 @@
 									    $diff = (date('Y') - $dob);
 									@endphp
 									<div class="intergrante-contnet">
-										<h3>Nombre del sobrino {{$key+1}}: {{$member->Nombre}}</h3>
+										<h3>{{$member->Nombre}}</h3>
 										<p>Número de socio: {{$member->Socio}}</p>
 										<p>Edad:  {{$diff}} años</p>
 										<p>Sexo: {{$member->Sexo}}</p>
-										<a href="#">Seleccionar</a>
+										<a href="{{url('/course_selection')}}/{{$member->Socio}}">Seleccionar</a>
 									</div>
 								</div>
 						</div>

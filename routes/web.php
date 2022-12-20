@@ -33,6 +33,7 @@ Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
 
 Route::get('/my_account', [UserController::class, 'my_account']);
+Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

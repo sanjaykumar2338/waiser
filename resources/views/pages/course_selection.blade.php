@@ -12,7 +12,7 @@
 					<div class="col-md-7">
 						<div class="socio-left d-flex flex-wrap align-itmes-center">
 							<p>Socio seleccionado: <strong>Nombre Apellido Apellido</strong></p>
-							<span style="display: none;" class="hgh-color">Cambiar</span>
+							<a class="hgh-color" href="{{url('/')}}/my_account">Cambiar</a>
 						</div>
 					</div>
 					<div class="col-md-5">

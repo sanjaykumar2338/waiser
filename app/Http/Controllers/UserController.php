@@ -23,6 +23,11 @@ class UserController extends Controller
 
     public function my_account(Request $request){
         $member_id = Session::get('user_id');
+        if(!$member_id){
+            Session::flash('message', 'por favor inicie sesión primero.');
+            return Redirect::back();
+        }
+
         //echo $member_id; die;
         $member_id = substr($member_id, 0, 5);
         $members = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiPMembresiaIntegrantes :membresia"),[
@@ -57,5 +62,9 @@ class UserController extends Controller
 
         //echo "<pre>"; print_r($members); die;
         return view('pages.intergrantes')->with('members',$members)->with('son_arr',$son_arr)->with('daughter_arr',$daughter_arr)->with('sobrino',$sobrino);
+    }
+
+    public function course_selection(Request $request){
+        return view('pages.course_selection');
     }
 }
