@@ -78,7 +78,7 @@ class HomeController extends Controller
         //echo Session::get('membresia');
         Session::forget('user_id');
         Session::forget('membresia');
-        Session::flash('message', 'Logout successfully');
+        Session::flash('message', 'Cerrar sesión con éxito');
         return redirect('/home');
     }
 
@@ -178,7 +178,7 @@ class HomeController extends Controller
                 Session::put('membresia', $rec[0]->Membresia);
                 //echo "<pre>"; print_r($rec); die;
                 Session::flash('message', $message);
-                return redirect('/home');
+                return redirect('/my_account');
             }else{
                 $message = 'error de inicio de sesion.';
                 Session::flash('message', $message);

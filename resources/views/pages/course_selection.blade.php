@@ -28,95 +28,43 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>futbol soccer</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>gimnasia</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>NATACIÓN</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>DANZA</h3>
-							<a href="#">Seleccionar</a>
+				@foreach($result as $key=>$row)
+
+					@php $image_name = ''; @endphp
+					@foreach($row as $index=>$item)
+						@if($item->CategoriaImagen!='')
+							@php 
+								$image_name = $item->CategoriaImagen;
+								break;
+							@endphp
+						@endif
+					@endforeach
+
+					<div class="col-md-3 col-6">
+						<div class="socio-box">
+							<div class="socio-img">
+								
+								@php 
+									$url = '';
+									if($image_name){
+										$url = Helper::get_image_course($item->CategoriaImagen.'.png'); 
+									}
+								@endphp
+
+								@if($url)
+									<img src="{{ $url }}"/>
+								@else
+									<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
+								@endif
+							</div>
+							@php if($image_name) { echo 'CategoriaImagen: '.$image_name.'.png'; } @endphp
+							<div class="socio-contnet">
+								<h3>{{$key}}</h3>
+								<a href="#">Seleccionar</a>
+							</div>
 						</div>
 					</div>
-				</div>
-				
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>robótica</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>tenis</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>voleibol</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-6">
-					<div class="socio-box">
-						<div class="socio-img">
-							<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
-						</div>
-						<div class="socio-contnet">
-							<h3>manualidades</h3>
-							<a href="#">Seleccionar</a>
-						</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</div>

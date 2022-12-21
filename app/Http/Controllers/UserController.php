@@ -85,7 +85,18 @@ class UserController extends Controller
     }
 
     public function course_selection(Request $request){
-        return view('pages.course_selection');
+        $member_id = $request->id;
+        $plans = DB::connection('sqlsrv')->select(DB::raw("exec xpwplanes :socio"),[
+                ':socio' => $member_id
+            ]);
+
+        $result = array();
+        foreach ($plans as $element) {
+            $result[$element->Coordinacion][] = $element;
+        }
+
+        //echo "<pre>"; print_r($result); die;
+        return view('pages.course_selection')->with('result',$result);
     }
 
     public function get_image($id){
