@@ -173,10 +173,11 @@ class HomeController extends Controller
 
             //echo "<pre>"; print_r($rec); die;            
             if($rec){
-                $message = 'Inicie sesión con éxito.';
                 Session::put('user_id', $rec[0]->Socio);
                 Session::put('membresia', $rec[0]->Membresia);
                 //echo "<pre>"; print_r($rec); die;
+                //dd(session()->all());
+                $message = 'Inicie sesión con éxito.';
                 Session::flash('message', $message);
                 return redirect('/my_account');
             }else{

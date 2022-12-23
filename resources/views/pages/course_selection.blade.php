@@ -11,7 +11,7 @@
 				<div class="row align-itmes-center">
 					<div class="col-md-7">
 						<div class="socio-left d-flex flex-wrap align-itmes-center">
-							<p>Socio seleccionado: <strong>Nombre Apellido Apellido</strong></p>
+							<p>Socio seleccionado: <strong>{{$member_info->Nombre}}</strong></p>
 							<a class="hgh-color" href="{{url('/')}}/my_account">Cambiar</a>
 						</div>
 					</div>
@@ -57,10 +57,9 @@
 									<img src="{{ asset('public/assests/images/bg.jpg')}}"/>
 								@endif
 							</div>
-							@php if($image_name) { echo 'CategoriaImagen: '.$image_name.'.png'; } @endphp
 							<div class="socio-contnet">
 								<h3>{{$key}}</h3>
-								<a href="#">Seleccionar</a>
+								<a href="{{url('/course_selection_part')}}/{{$member_info->Socio}}/{{$key}}">Seleccionar</a>
 							</div>
 						</div>
 					</div>

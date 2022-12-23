@@ -18,6 +18,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $member_id = Session::get('user_id');
+        //dd(session()->all());
+        if(!$member_id){
+            Session::flash('message', 'por favor inicie sesión primero.');
+            return redirect('/login');
+        }
+    }
+
     public function __invoke(Request $request)
     {
         //
@@ -95,8 +105,61 @@ class UserController extends Controller
             $result[$element->Coordinacion][] = $element;
         }
 
+        $member_info = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+            ':socio' => $member_id
+        ]);
+
+        //echo "<pre>"; print_r($plans); die;
+        //echo "<pre>"; print_r($member_info); die;
+        return view('pages.course_selection')->with('result',$result)->with('member_info',$member_info[0]);
+    }
+
+    public function course_selection_part(Request $request){
+        $plans = DB::connection('sqlsrv')->select(DB::raw("exec xpwplanes :socio"),[
+                ':socio' => $request->socio_id
+            ]);
+
+        $member_id = Session::get('user_id');
+        //echo $member_id; die;
+        $member_id = substr($member_id, 0, 5);
+        $members = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiPMembresiaIntegrantes :membresia"),[
+            ':membresia' => $member_id
+        ]);
+
+        //echo "<pre>"; print_r($members); die;
+        $current_member = '';
+        foreach ($members as $key => $value) {
+           if($value->Socio==$request->socio_id){
+                $current_member = $value;
+           }
+        }
+
+        $dob=date('Y', strtotime($current_member->FechaNacimiento));
+        $diff = (date('Y') - $dob);
+        //echo "<pre>"; print_r($current_member); die;
+
+        $result = array();
+        foreach ($plans as $element) {
+            if($element->Coordinacion==$request->title && ($diff >= intval($element->CDIEdadMinimam) && $diff <= intval($element->CDIEdadMaxima))){
+                if($element->CDISexo=='Indistinto'){
+                    $result[] = $element;
+                } else{
+                    if($current_member->Sexo==$element->CDISexo){
+                        $result[] = $element;
+                    }
+                }
+            }
+        }
+
+        if(count($result)==0){
+            Session::flash('message', 'No hay cursos disponibles basados en criterios como edad, sexo');
+            return Redirect::back();
+        }
+
         //echo "<pre>"; print_r($result); die;
-        return view('pages.course_selection')->with('result',$result);
+        //echo "<pre>"; print_r($plans); die;
+        //echo "<pre>"; print_r($member_info); die;
+        return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title);
     }
 
     public function get_image($id){
