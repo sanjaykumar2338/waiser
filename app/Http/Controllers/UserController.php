@@ -62,7 +62,7 @@ class UserController extends Controller
                 //echo $row->Socio;echo "<br>";
                 //echo $this->get_image($row->Socio);echo "<br>";
                 //echo "<br>";
-                $url = $this->get_image($row->Socio.'.jpeg'); 
+                $url = '';//$this->get_image($row->Socio.'.jpeg'); 
                 $members[$key]->image_url = $url;
                 $row->image_url = $url;
 
@@ -174,10 +174,53 @@ class UserController extends Controller
             return Redirect::back();
         }
 
-        echo "<pre>"; print_r($result); die;
+        //echo "<pre>"; print_r($current_member); die;
+        //echo "<pre>"; print_r($result); die;
         //echo "<pre>"; print_r($plans); die;
         //echo "<pre>"; print_r($member_info); die;
         return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title);
+    }
+
+    public function remove_cart(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+        }
+
+        Session::put('cart_message', 'Curso eliminado con éxito');
+        //Session::flash('message', 'Curso eliminado con éxito');
+        return Redirect::back();
+    }
+
+    public function add_to_cart(Request $request){
+        $cart = session()->get('cart', []);
+        $id = $request->package.'M'.$request->member_id;
+        //echo "<pre>"; print_r($cart); die;
+
+        if(isset($cart[$id])) {
+
+            Session::put('cart_message', 'Este curso ya está en el carrito');
+            //Session::flash('message', 'Este curso ya está en el carrito');
+            return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title);
+            //return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title.'?message=Este curso ya está en el carrito');
+        } else {
+            $cart[$id] = [
+                "package" => $request->package,
+                "member_id" => $request->member_id,
+                "station" => $request->station,
+                "sport_title" => $request->title
+            ];
+
+            session()->put('cart', $cart);
+            Session::put('cart_message', 'Curso agregado al carrito con éxito');
+            //Session::flash('message', 'Curso agregado al carrito con éxito');
+            return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title);
+            //return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title.'?message=Este curso ya está en el carrito');
+        }
     }
 
     public function get_image($id){

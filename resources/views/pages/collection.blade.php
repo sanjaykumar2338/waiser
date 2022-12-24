@@ -11,7 +11,12 @@
 				<p>Socio seleccionado: <strong>{{$current_member->Nombre}}</strong></p>
 			</div>
 		</div>
-		
+
+		@if (Session::has('cart_message'))
+   			<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+   			@php Session::forget('cart_message'); @endphp
+		@endif
+
 		<div class="collection-section">
 			<div class="container">
 				<div class="row">
@@ -45,15 +50,14 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-lg-8">
 						<div class="row">
-
 						@if($result)
 							@foreach($result as $row)
 								<div class="col-md-4">
 									<div class="cl-pd-box">
-										<div class="cl-pd-img">
-											{{$row->SubCategoriaImagen.'.jpg'}}
+										<div class="cl-pd-img">											
 											@php 
 												$url = '';
 												if($row->SubCategoriaImagen){
@@ -71,16 +75,16 @@
 											<h2 class="brd-color">{{$row->Descripcion}}</h2>
 											<h2>Precio:  ${{number_format($row->Precio, 2)}}</h2>
 											<ul class="prd-tm d-flex flex-wrap">
-												<li>Lunes y Míercoles </li>  
+												<li>{{$row->Lunes}} {{$row->Martes}} {{$row->Miercoles}} {{$row->Jueves}} {{$row->Viernes}} {{$row->Sabado}} {{$row->Domingo}}</li>  
 												<li>{{$row->Horario}}  </li> 
 											</ul>
-											<p>Inicia: 10/01/2022   Finaliza: 10/06/2022  </p>
+											<p>Inicia: {{date('d-m-Y',strtotime($row->Inicio))}}   Finaliza: {{date('d-m-Y',strtotime($row->Fin))}}  </p>
 											<div class="pr-color">
-												<p>Sede:  CDI    </p>
-												<p>Profesor:  Adrián Olvera</p>
+												<p>Sede:  {{$row->SEDE}}    </p>
+												<p>Profesor:  {{$row->NombreproProf}}</p>
 											</div>
-											<h3>8 lugares disponibles de 10</h3>
-											<a href="#">Agregar al carrito</a>
+											<h3>{{$row->Disponible}} lugares disponibles de {{$row->Cupo}}</h3>
+											<a classs="add_to_cart" href="{{url('add_to_cart')}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}">Agregar al carrito</a>
 										</div>
 									</div>
 								</div>

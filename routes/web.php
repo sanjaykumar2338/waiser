@@ -33,6 +33,8 @@ Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
 
 Route::get('/my_account', [UserController::class, 'my_account']);
+Route::get('/add_to_cart/{station}/{package}/{member_id}/{title}', [UserController::class, 'add_to_cart']);
+Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 Route::get('/course_selection_part/{socio_id}/{title}', [UserController::class, 'course_selection_part']);
 

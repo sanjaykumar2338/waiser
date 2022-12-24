@@ -35,7 +35,7 @@
 					</ul>
 				  </div> 
 				  @if(Session::get('user_id'))
-				  	<a class="crt-btn" data-toggle="modal" data-target="#myCart" href="#"><img src="{{ asset('public/assests/images/cart.svg')}}"><span class="crt-count">2</span></a>
+				  	<a class="crt-btn" data-toggle="modal" data-target="#myCart" href="#"><img src="{{ asset('public/assests/images/cart.svg')}}"><span class="crt-count">{{count(session()->get('cart', []))}}</span></a>
 				  @endif
 				</nav>
 			</div>
