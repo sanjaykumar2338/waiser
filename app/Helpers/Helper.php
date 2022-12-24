@@ -35,6 +35,7 @@ class Helper
                 $request = $s3Client->createPresignedRequest($cmd, '+7 days');
                 if($request){
                     $presignedUrl = (string) $request->getUri();
+                    //echo $presignedUrl; //die;
                     return $presignedUrl; //die;
                     //header("LOCATION: $presignedUrl");
                     //die;

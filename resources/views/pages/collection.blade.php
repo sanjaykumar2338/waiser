@@ -53,11 +53,11 @@
 								<div class="col-md-4">
 									<div class="cl-pd-box">
 										<div class="cl-pd-img">
-
+											{{$row->SubCategoriaImagen.'.jpg'}}
 											@php 
 												$url = '';
 												if($row->SubCategoriaImagen){
-													$url = Helper::get_image_course($row->SubCategoriaImagen.'.png'); 
+													$url = Helper::get_image_course($row->SubCategoriaImagen.'.jpg'); 
 												}
 											@endphp
 

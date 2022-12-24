@@ -21,8 +21,9 @@ class UserController extends Controller
 
     public function __construct(){
         $member_id = Session::get('user_id');
-        //dd(session()->all());
+        
         if(!$member_id){
+            //dd(session()->all());
             Session::flash('message', 'por favor inicie sesión primero.');
             return redirect('/login');
         }
@@ -95,6 +96,14 @@ class UserController extends Controller
     }
 
     public function course_selection(Request $request){
+        $member_id = Session::get('user_id');
+        
+        if(!$member_id){
+            //dd(session()->all());
+            Session::flash('message', 'por favor inicie sesión primero.');
+            return redirect('/login');
+        }
+
         $member_id = $request->id;
         $plans = DB::connection('sqlsrv')->select(DB::raw("exec xpwplanes :socio"),[
                 ':socio' => $member_id
@@ -115,6 +124,14 @@ class UserController extends Controller
     }
 
     public function course_selection_part(Request $request){
+        $member_id = Session::get('user_id');
+        
+        if(!$member_id){
+            //dd(session()->all());
+            Session::flash('message', 'por favor inicie sesión primero.');
+            return redirect('/login');
+        }
+
         $plans = DB::connection('sqlsrv')->select(DB::raw("exec xpwplanes :socio"),[
                 ':socio' => $request->socio_id
             ]);
@@ -134,9 +151,10 @@ class UserController extends Controller
            }
         }
 
+        //echo "<pre>"; print_r($current_member); die;
         $dob=date('Y', strtotime($current_member->FechaNacimiento));
         $diff = (date('Y') - $dob);
-        //echo "<pre>"; print_r($current_member); die;
+        
 
         $result = array();
         foreach ($plans as $element) {
@@ -156,7 +174,7 @@ class UserController extends Controller
             return Redirect::back();
         }
 
-        //echo "<pre>"; print_r($result); die;
+        echo "<pre>"; print_r($result); die;
         //echo "<pre>"; print_r($plans); die;
         //echo "<pre>"; print_r($member_info); die;
         return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title);

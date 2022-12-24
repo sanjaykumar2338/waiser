@@ -47,7 +47,7 @@
 								@php 
 									$url = '';
 									if($image_name){
-										$url = Helper::get_image_course($item->CategoriaImagen.'.png'); 
+										$url = Helper::get_image_course($item->CategoriaImagen); 
 									}
 								@endphp
 
