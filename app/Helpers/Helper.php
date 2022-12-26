@@ -12,7 +12,7 @@ class Helper
     }
 
     public static function get_image_course($id){
-        return '';
+        //return '';
         try{
             $s3Client = new S3Client([
                 'version'     => 'latest',

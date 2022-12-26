@@ -8,40 +8,55 @@
 	<div class="prd-main">
 		<div class="cl-tp hide-mb">
 			<div class="container">
-				<p>Socio seleccionado: <strong>Nombre Apellido Apellido</strong></p>
+				<p>Socio seleccionado: <strong>{{$member_info->Nombre}}</strong></p>
 			</div>
 		</div>
+		@if (Session::has('cart_message'))
+   			<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+   			@php Session::forget('cart_message'); @endphp
+		@endif
 		<div class="container">
 			<div class="row">
 				<div class="col-md-5">
 					<div class="product-img">
-						<img src="{{ asset('public/assests/images/product-1.jpg')}}"/>
-						<a class="cart-btn red-btn hide-mb" href="#">Regresar y elegir otro</a>
+						@php 
+							$url = '';
+							if($product->SubCategoriaImagen){
+								$url = Helper::get_image_course($product->SubCategoriaImagen.'.jpg'); 
+							}
+						@endphp
+
+						@if($url)
+							<img src="{{ $url }}"/>
+						@else
+							<img src="{{ asset('public/assests/images/product-1.jpg')}}"/>
+						@endif
+						<a class="cart-btn red-btn hide-mb" onclick="history.back()">Regresar y elegir otro</a>
 					</div>
 				</div>
 				<div class="col-md-7">
 					<div class="product-detail">
 						<div class="d-flex flex-wrap align-items-center justify-content-between prd-prc">
-							<h3>Precio: $4,340.00</h3>
+							<h3>Precio: ${{number_format($product->Precio, 2)}}</h3>
 							<p class="lugares"><span></span>8 LUGARES DISPONIBLES DE 10</p>
 						</div>
 						<ul>
-							<li>HORARIO:<strong>16:40 a 18:10 Lun. Mie</strong></li>
-							<li>ciclo:<strong>PERIODO ANUAL FOMENTO DEPORTIVO 2022-2023</strong></li>
-							<li>COORDINACIÓN:<strong>FUTBOL</strong></li>
-							<li>inicio del curso:<strong>10/01/2023</strong></li>
-							<li>fin del curso:<strong>10/06/2023</strong></li>
-							<li>sede:<strong>CDI</strong></li>
-							<li>ESPACIO:<strong>CAMPFUT1</strong></li>
-							<li>profesor:<strong>RENE CHAVEZ</strong></li>
-							<li>género:<strong>MASCULINO</strong></li>
-							<li>edad máxima:<strong>10</strong></li>
-							<li>edad mínima:<strong>6</strong></li>
-							<li>nivel:<strong>ENSEÑANZA</strong></li>
-							<li>requiere cobertura médica:<strong>SI</strong></li>
-							<li>PAQUETE:<strong>98003</strong></li>
+							<li>HORARIO:<strong>{{$product->Horario}} {{$product->Lunes}} {{$product->Martes}} {{$product->Miercoles}} {{$product->Jueves}} {{$product->Viernes}} {{$product->Sabado}} {{$product->Domingo}}</strong></li>
+							<li>ciclo:<strong>{{$product->Ciclo}}</strong></li>
+							<li>COORDINACIÓN:<strong>{{$product->Coordinacion}}</strong></li>
+							<li>inicio del curso:<strong>{{date('d/m/Y',strtotime($product->Inicio))}}</strong></li>
+							<li>fin del curso:<strong>{{date('d/m/Y',strtotime($product->Fin))}}</strong></li>
+							<li>sede:<strong>{{$product->SEDE}}</strong></li>
+							<li>ESPACIO:<strong>{{$product->Espacio}}</strong></li>
+							<li>profesor:<strong>{{$product->NombreproProf}}</strong></li>
+							<li>género:<strong>{{$product->CDISexo}}</strong></li>
+							<li>edad máxima:<strong>{{$product->CDIEdadMaxima}}</strong></li>
+							<li>edad mínima:<strong>{{$product->CDIEdadMinimam}}</strong></li>
+							<li>nivel:<strong>{{$product->Nivel}}</strong></li>
+							<li>requiere cobertura médica:<strong>{{$product->RequiereCoberturaMedica}}</strong></li>
+							<li>PAQUETE:<strong>{{$product->Paquete}}</strong></li>
 						</ul>
-						<a class="cart-btn blue-btn" href="#">Agregar al carrito</a>
+						<a class="cart-btn blue-btn" href="{{url('add_to_cart')}}/{{$station}}/{{$package}}/{{$member_info->Socio}}/{{$coordinacion}}/{{$product_data}}">Agregar al carrito</a>
 					</div>
 				</div>
 			</div>

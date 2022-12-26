@@ -18,7 +18,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/home', [HomeController::class, 'home']);
 Route::get('/checkout', [HomeController::class, 'checkout']);
-Route::get('/product', [HomeController::class, 'product']);
+Route::get('/product/{data}/{station}/{package}/{member_id}/{title}', [HomeController::class, 'product']);
 Route::get('/pago', [HomeController::class, 'pago']);
 Route::get('/collection', [HomeController::class, 'collection']);
 Route::get('/intergrantes', [HomeController::class, 'intergrantes']);
@@ -33,7 +33,9 @@ Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
 
 Route::get('/my_account', [UserController::class, 'my_account']);
-Route::get('/add_to_cart/{station}/{package}/{member_id}/{title}', [UserController::class, 'add_to_cart']);
+Route::get('/add_to_cart/{station}/{package}/{member_id}/{title}/{data}', [UserController::class, 'add_to_cart']);
+Route::get('/add_to_cart_detail/{station}/{package}/{member_id}/{title}/{data}', [UserController::class, 'add_to_cart_detail']);
+
 Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 Route::get('/course_selection_part/{socio_id}/{title}', [UserController::class, 'course_selection_part']);

@@ -63,12 +63,14 @@
 												if($row->SubCategoriaImagen){
 													$url = Helper::get_image_course($row->SubCategoriaImagen.'.jpg'); 
 												}
+
+												$product_info = urlencode(serialize($row));
 											@endphp
 
 											@if($url)
-												<img src="{{ $url }}"/>
+												<a href="{{url('product')}}/{{$product_info}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}"><img src="{{ $url }}"/></a>
 											@else
-												<img src="{{ asset('public/assests/images/cl-prd.jpg')}}"/>
+												<a href="{{url('product')}}/{{$product_info}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}"><img src="{{ asset('public/assests/images/cl-prd.jpg')}}"/></a>
 											@endif
 										</div>
 										<div class="cl-pd-ct prd-content">
@@ -84,7 +86,7 @@
 												<p>Profesor:  {{$row->NombreproProf}}</p>
 											</div>
 											<h3>{{$row->Disponible}} lugares disponibles de {{$row->Cupo}}</h3>
-											<a classs="add_to_cart" href="{{url('add_to_cart')}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}">Agregar al carrito</a>
+											<a classs="add_to_cart" href="{{url('add_to_cart')}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}/{{$product_info}}">Agregar al carrito</a>
 										</div>
 									</div>
 								</div>

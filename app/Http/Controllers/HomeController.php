@@ -34,7 +34,8 @@ class HomeController extends Controller
 
         
         //echo "<pre>"; print_r($rec); die;
-        return view('pages.home');
+        //return view('pages.home');
+        return Redirect::to("/login");
     }
 
     public function checkout(Request $request){
@@ -42,7 +43,13 @@ class HomeController extends Controller
     }
 
     public function product(Request $request){
-        return view('pages.product');
+        $product = unserialize(urldecode($request->data));
+        $member_info = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+            ':socio' => $request->member_id
+        ]);
+
+        //echo "<pre>"; print_r($arr); die;
+        return view('pages.product')->with('product',$product)->with('member_info',$member_info[0])->with('station',$request->station)->with('package',$request->package)->with('title',$request->title)->with('coordinacion',$request->coordinacion)->with('product_data',$request->data);
     }
 
     public function pago(Request $request){
