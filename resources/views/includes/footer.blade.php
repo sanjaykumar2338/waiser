@@ -80,7 +80,7 @@
 				</ul>
 				<div class="car-btn-grp">
 					<a class="cart-btn" href="{{url('/checkout')}}">Checkout</a>
-					<a class="cart-btn" href="{{url('/my_account')}}">Agregar otra curso</a>
+					<a class="cart-btn" href="{{url('/my_account')}}">Agregar otro curso</a>
 				</div>
 			</div>
         </div>

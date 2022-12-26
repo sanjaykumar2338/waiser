@@ -178,6 +178,7 @@ class UserController extends Controller
         //echo "<pre>"; print_r($result); die;
         //echo "<pre>"; print_r($plans); die;
         //echo "<pre>"; print_r($member_info); die;
+        //echo "<pre>"; print_r($request->title); die;
         return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title);
     }
 
@@ -246,21 +247,33 @@ class UserController extends Controller
 
             Session::put('cart_message', 'Este curso ya está en el carrito');
             //Session::flash('message', 'Este curso ya está en el carrito');
-            return Redirect::back();
+            return Redirect::to("/product/".$request->data.'/'.$request->station.'/'.$request->package.'/'.$request->member_id.'/'.$request->title);
             //return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title.'?message=Este curso ya está en el carrito');
         } else {
+            $member_info = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+                ':socio' => $request->member_id
+            ]);
+
+            $product_info = unserialize(urldecode($request->data));
             $cart[$id] = [
                 "package" => $request->package,
                 "member_id" => $request->member_id,
+                "member_name" => $member_info[0]->Nombre,
                 "station" => $request->station,
                 "sport_title" => $request->title,
-                "product_info" => $request->product_info
+                "product_name" => $product_info->Descripcion,
+                "product_price" => $product_info->Precio,
+                "product_sede" => $product_info->SEDE,
+                "product_professor" => $product_info->NombreproProf,
+                "product_days" => $product_info->Lunes.' '.$product_info->Martes.' '.$product_info->Miercoles.' '.$product_info->Jueves.' '.$product_info->Viernes.' '.$product_info->Sabado.' '.$product_info->Domingo,
+                "product_time" => $product_info->Horario,
+                "product_image" => $product_info->SubCategoriaImagen
             ];
 
             session()->put('cart', $cart);
             Session::put('cart_message', 'Curso agregado al carrito con éxito');
             //Session::flash('message', 'Curso agregado al carrito con éxito');
-            return Redirect::back();
+            return Redirect::to("/product/".$request->data.'/'.$request->station.'/'.$request->package.'/'.$request->member_id.'/'.$request->title);
             //return Redirect::to("/course_selection_part/".$request->member_id.'/'.$request->title.'?message=Este curso ya está en el carrito');
         }
     }

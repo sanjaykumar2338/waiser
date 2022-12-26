@@ -48,8 +48,8 @@ class HomeController extends Controller
             ':socio' => $request->member_id
         ]);
 
-        //echo "<pre>"; print_r($arr); die;
-        return view('pages.product')->with('product',$product)->with('member_info',$member_info[0])->with('station',$request->station)->with('package',$request->package)->with('title',$request->title)->with('coordinacion',$request->coordinacion)->with('product_data',$request->data);
+        //echo "<pre>"; print_r($request->title); die;
+        return view('pages.product')->with('product',$product)->with('member_info',$member_info[0])->with('station',$request->station)->with('package',$request->package)->with('title',$request->title)->with('coordinacion',$request->title)->with('product_data',urlencode(serialize($product)));
     }
 
     public function pago(Request $request){

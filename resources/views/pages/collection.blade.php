@@ -29,11 +29,31 @@
 									<h5>DÍAS</h5>
 									<div class="custom-control custom-checkbox">
 										<input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-										<label class="custom-control-label" for="customCheck1">LUNES Y MIÉRCOLES</label>
+										<label class="custom-control-label" for="customCheck1">Lunes</label>
 									</div>
 									<div class="custom-control custom-checkbox">
 										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
-										<label class="custom-control-label" for="customCheck2">MARTES Y JUEVES</label>
+										<label class="custom-control-label" for="customCheck2">Martes</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+										<label class="custom-control-label" for="customCheck2">Miercoles</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+										<label class="custom-control-label" for="customCheck2">Jueves</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+										<label class="custom-control-label" for="customCheck2">Viernes</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+										<label class="custom-control-label" for="customCheck2">Sabado</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+										<label class="custom-control-label" for="customCheck2">Domingo</label>
 									</div>
 								</div>
 								<div class="dias-bx">

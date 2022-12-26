@@ -56,7 +56,7 @@
 							<li>requiere cobertura médica:<strong>{{$product->RequiereCoberturaMedica}}</strong></li>
 							<li>PAQUETE:<strong>{{$product->Paquete}}</strong></li>
 						</ul>
-						<a class="cart-btn blue-btn" href="{{url('add_to_cart')}}/{{$station}}/{{$package}}/{{$member_info->Socio}}/{{$coordinacion}}/{{$product_data}}">Agregar al carrito</a>
+						<a class="cart-btn blue-btn" href="{{url('add_to_cart_detail')}}/{{$station}}/{{$package}}/{{$member_info->Socio}}/{{$coordinacion}}/{{$product_data}}">Agregar al carrito</a>
 					</div>
 				</div>
 			</div>
