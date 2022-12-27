@@ -298,7 +298,9 @@ class UserController extends Controller
                 "product_professor" => $product_info->NombreproProf,
                 "product_days" => $product_info->Lunes.' '.$product_info->Martes.' '.$product_info->Miercoles.' '.$product_info->Jueves.' '.$product_info->Viernes.' '.$product_info->Sabado.' '.$product_info->Domingo,
                 "product_time" => $product_info->Horario,
-                "product_image" => $product_info->SubCategoriaImagen
+                "product_image" => $product_info->SubCategoriaImagen,
+                'inicio' => $product_info->Inicio,
+                'fin' => $product_info->Fin
             ];
 
             session()->put('cart', $cart);

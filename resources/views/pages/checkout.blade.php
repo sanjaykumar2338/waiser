@@ -5,6 +5,12 @@
 			<h2>Checkout</h2>
 		</div>
 	</div>
+
+	@if (Session::has('cart_message'))
+		<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+		@php Session::forget('cart_message'); @endphp
+	@endif
+
 	<div class="carrito">
 		<div class="container">
 			<div class="row hide-mb">
@@ -21,71 +27,70 @@
 				</div>
 			</div>
 			<div class="crt-rep">
-			<div class="row align-items-center">
-				<div class="col-md-9 col-8">
-					<div class="prd-crt">
-						<div class="d-flex flex-wrap prd-inner">
-							<div class="prd-img">
-								<img src="{{ asset('public/assests/images/prd-1.jpg')}}"/>
-							</div> 
-							<div class="prd-content">
-								<h2 class="brd-color">Descricpión del curso 1</h2>
-								<h2>Nombre Apellido1 Apellido2</h2>
-								<span class="prd-tm">16:40 a 15:40  Lunes y Míercoles </span>
-								<p>Inicia: 10/01/2022   Finaliza: 10/06/2022  </p>
-								<p>Sede:  CDI    </p>
-								<p>Profesor:  Adrián Olvera</p>
-							</div> 
-						</div> 
-					</div> 
-				</div> 
-				<div class="col-md-3 col-4">
-					<div class="prd-right">
-						<div class="d-flex justify-content-between align-items-center">
-							<div class="prd-price">
-								<h3>$4,340.00</h3>
-							</div>
-							<div class="prd-cross">
-								<a class="prd-dlt" href="#"><img src="{{ asset('public/assests/images/delete.svg')}}"></a>
-							</div>
-						</div> 
-					</div> 
-				</div> 
-			</div> 
-			<div class="row">
-				<div class="col-md-9 col-8">
-					<div class="prd-crt">
-						<div class="d-flex flex-wrap prd-inner">
-							<div class="prd-img">
-								<img src="{{ asset('public/assests/images/prd-1.jpg')}}"/>
-							</div> 
-							<div class="prd-content">
-								<h2 class="brd-color">Descricpión del curso 1</h2>
-								<h2>Nombre Apellido1 Apellido2</h2>
-								<span class="prd-tm">16:40 a 15:40  Lunes y Míercoles </span>
-								<p>Inicia: 10/01/2022   Finaliza: 10/06/2022  </p>
-								<p>Sede:  CDI    </p>
-								<p>Profesor:  Adrián Olvera</p>
+
+			@php
+				$cart = session()->get('cart', []);
+				$total = 0.00;
+			@endphp	
+
+			@if($cart)
+					@foreach($cart as $key=>$row)
+					  @php
+					  	//echo "<pre>"; print_r($row); die;
+					  	$total += $row['product_price'];
+					  @endphp
+					<div class="row align-items-center">
+						<div class="col-md-9 col-8">
+							<div class="prd-crt">
+								<div class="d-flex flex-wrap prd-inner">
+									<div class="prd-img">
+									@php 
+										$url = '';
+										if($row['product_image']){
+											$url = Helper::get_image_course($row['product_image'].'.jpg'); 
+										}
+									@endphp
+
+									@if($url)
+										<img src="{{ $url }}"/>
+									@else
+										<img src="{{ asset('public/assests/images/prd-1.jpg')}}"/>
+									@endif
+									</div> 
+									<div class="prd-content">
+										<h2 class="brd-color">{{$row['product_name']}}</h2>
+										<h2>{{$row['member_name']}} </h2>
+										<span class="prd-tm">{{$row['product_time']}} {{$row['product_days']}} </span>
+										<p>Inicia: {{date('d/m/Y',strtotime($row['inicio']))}}   Finaliza: {{date('d/m/Y',strtotime($row['fin']))}}  </p>
+										<p>Sede:  {{$row['product_sede']}}     </p>
+										<p>Profesor:  {{$row['product_professor']}}</p>
+									</div> 
+								</div> 
 							</div> 
 						</div> 
-					</div> 
-				</div> 
-				<div class="col-md-3 col-4">
-					<div class="prd-right">
-						<div class="d-flex justify-content-between">
-							<div class="prd-price">
-								<h3>$6,500.00</h3>
-							</div>
-							<div class="prd-cross">
-								<a class="prd-dlt" href="#"><img src="{{ asset('public/assests/images/delete.svg')}}"></a>
-							</div>
+						<div class="col-md-3 col-4">
+							<div class="prd-right">
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="prd-price">
+										<h3>${{number_format($row['product_price'], 2)}}</h3>
+									</div>
+									<div class="prd-cross">
+										<a class="prd-dlt" style="cursor: pointer;" href="{{url('/remove_cart')}}/{{$key}}"><img src="{{ asset('public/assests/images/delete.svg')}}"></a>
+									</div>
+								</div> 
+							</div> 
 						</div> 
-					</div> 
-				</div> 
-			</div> 
+					</div>
+				@endforeach	
+			@else
+				<h3>El carrito esta vacío</h3>
+			@endif 
+			
 			</div> 
 		</div> 
 	</div> 
+
+	@if($cart)
 	<div class="carrito-cupn hide-mb">
 		<div class="container">
 			<div class="row align-items-center">
@@ -105,7 +110,7 @@
 						<table>
 							<tr>
 								<td>Subtotal</td>
-								<td><strong>$10,840.00</strong></td>
+								<td><strong>${{number_format($total, 2)}}</strong></td>
 							</tr>
 							<tr>
 								<td>Cobertura </br>deportiva x 1</td>
@@ -117,7 +122,7 @@
 							</tr>
 							<tr>
 								<td>Total </td>
-								<td><strong>$11,066.00</strong></td>
+								<td><strong>${{number_format($total, 2)}}</strong></td>
 							</tr>
 						</table>
 					</div>
@@ -125,6 +130,8 @@
 			</div>
 		</div>
 	</div>
+	
+
 	<div class="carrito-info hide-mb">
 		<div class="container">
 			<div class="carrito-chck">
@@ -149,4 +156,5 @@
 			</div>
 		</div>
 	</div>
+	@endif
 @stop
