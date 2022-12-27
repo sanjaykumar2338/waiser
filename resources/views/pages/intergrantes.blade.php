@@ -19,7 +19,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -44,7 +44,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -69,7 +69,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -97,7 +97,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -124,7 +124,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -151,7 +151,7 @@
 										@if($member->image_url=="")
 											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img src="{{ $member->image_url }}"/>
+											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php

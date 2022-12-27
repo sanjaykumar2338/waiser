@@ -38,7 +38,7 @@ Route::get('/add_to_cart_detail/{station}/{package}/{member_id}/{title}/{data}',
 
 Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
-Route::get('/course_selection_part/{socio_id}/{title}', [UserController::class, 'course_selection_part']);
+Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserController::class, 'course_selection_part']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

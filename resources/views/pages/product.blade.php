@@ -38,7 +38,7 @@
 					<div class="product-detail">
 						<div class="d-flex flex-wrap align-items-center justify-content-between prd-prc">
 							<h3>Precio: ${{number_format($product->Precio, 2)}}</h3>
-							<p class="lugares"><span></span>8 LUGARES DISPONIBLES DE 10</p>
+							<p class="lugares"><span></span>{{$product->Cupo}} LUGARES DISPONIBLES DE {{$product->Disponible}}</p>
 						</div>
 						<ul>
 							<li>HORARIO:<strong>{{$product->Horario}} {{$product->Lunes}} {{$product->Martes}} {{$product->Miercoles}} {{$product->Jueves}} {{$product->Viernes}} {{$product->Sabado}} {{$product->Domingo}}</strong></li>

@@ -124,6 +124,8 @@ class UserController extends Controller
     }
 
     public function course_selection_part(Request $request){
+        //echo "<pre>"; print_r($request->all()); die;
+
         $member_id = Session::get('user_id');
         
         if(!$member_id){
@@ -157,6 +159,7 @@ class UserController extends Controller
         
 
         $result = array();
+
         foreach ($plans as $element) {
             if($element->Coordinacion==$request->title && ($diff >= intval($element->CDIEdadMinimam) && $diff <= intval($element->CDIEdadMaxima))){
                 if($element->CDISexo=='Indistinto'){
@@ -169,17 +172,85 @@ class UserController extends Controller
             }
         }
 
-        if(count($result)==0){
-            Session::flash('message', 'No hay cursos disponibles basados en criterios como edad, sexo');
-            return Redirect::back();
+        if(count($result) > 0 && $request->sede){
+            $new_result = $result;
+            $result = array();
+
+            foreach($new_result as $row){
+                if(in_array($row->SEDE, $request->sede)){
+                    $result[] = $row;
+                }
+            }
         }
 
+        if(count($result) > 0 && $request->dias){
+            $new_result = $result;
+            $result = array();
+
+            foreach($new_result as $item){
+
+                foreach($request->dias as $row){
+
+                    if($row=='Lunes' && $item->Lunes!=""){
+                        $result[] = $item;
+                    }
+
+                    if($row=='Martes' && $item->Martes!=""){
+                         $result[] = $item;
+                    }
+
+                    if($row=='Miercoles' && $item->Miercoles!=""){
+                         $result[] = $item;
+                    }
+
+                    if($row=='Jueves' && $item->Jueves!=""){
+                         $result[] = $item;
+                    }
+
+                    if($row=='Viernes' && $item->Viernes!=""){
+                         $result[] = $item;
+                    }
+
+                    if($row=='Sabado' && $item->Sabado!=""){
+                         $result[] = $item;
+                    }
+
+                    if($row=='Domingo' && $item->Domingo!=""){
+                        $result[] = $item;
+                    }
+
+                }
+            }
+        }
+
+        //echo "<pre>"; print_r($result); die;
+        //if(count($result)==0){
+        //    Session::flash('message', 'No hay cursos disponibles basados en criterios como edad, sexo');
+        //    return Redirect::back();
+        //}
+
+        $sede = array();
+        foreach($result as $item){
+            $sede[] = $item->SEDE;
+        }
+
+        if($sede){
+            $sede = array_unique($sede);
+        }
+
+        $dias_param = array();
+        $sede_param = array();
+
+        $dias_param = $request->dias;
+        $sede_param = $request->sede;
+        //echo "<pre>"; var_dump($request->dias); //die;
+        //echo "<pre>"; print_r($sede); die;
         //echo "<pre>"; print_r($current_member); die;
         //echo "<pre>"; print_r($result); die;
         //echo "<pre>"; print_r($plans); die;
         //echo "<pre>"; print_r($member_info); die;
         //echo "<pre>"; print_r($request->title); die;
-        return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title);
+        return view('pages.collection')->with('result',$result)->with('current_member',$current_member)->with('coordinacion',$request->title)->with('sede',$sede)->with('dias_param',$dias_param)->with('sede_param',$sede_param);
     }
 
     public function remove_cart(Request $request)

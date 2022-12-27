@@ -18,7 +18,7 @@
 					<p class="cr-hgh">PRECIO</p>
 				</div>
 			</div>
-			<div class="carrit-pp">
+			<div class="carrit-pp" style="max-height: 400px;overflow-y: auto;">
 
 				@php
 					$cart = session()->get('cart', []);
@@ -73,17 +73,19 @@
 					</div>
 				@endif
 			</div>
-			<div class="car-total">
-				<ul class="d-flex justify-content-end">
-					<li>Total </li>
-					<li>${{number_format($total, 2)}}</li>
-				</ul>
-				<div class="car-btn-grp">
-					<a class="cart-btn" href="{{url('/checkout')}}">Checkout</a>
-					<a class="cart-btn" href="{{url('/my_account')}}">Agregar otro curso</a>
+			@if($cart)
+				<div class="car-total">
+					<ul class="d-flex justify-content-end">
+						<li>Total </li>
+						<li>${{number_format($total, 2)}}</li>
+					</ul>
+					<div class="car-btn-grp">
+						<a class="cart-btn" href="{{url('/checkout')}}">Checkout</a>
+						<a class="cart-btn" href="{{url('/my_account')}}">Agregar otro curso</a>
+					</div>
 				</div>
-			</div>
-        </div>
+			@endif
+      </div>
       </div>
     </div>
 </div>
