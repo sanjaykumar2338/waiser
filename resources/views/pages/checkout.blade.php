@@ -61,7 +61,7 @@
 										<h2 class="brd-color">{{$row['product_name']}}</h2>
 										<h2>{{$row['member_name']}} </h2>
 										<span class="prd-tm">{{$row['product_time']}} {{$row['product_days']}} </span>
-										<p>Inicia: {{date('d/m/Y',strtotime($row['inicio']))}}   Finaliza: {{date('d/m/Y',strtotime($row['fin']))}}  </p>
+										<p>Inicia: @if(isset($row['inicio'])) {{date('d/m/Y',strtotime(@$row['inicio']))}}@endif   Finaliza: @if(isset($row['fin'])){{date('d/m/Y',strtotime(@$row['fin']))}}@endif   </p>
 										<p>Sede:  {{$row['product_sede']}}     </p>
 										<p>Profesor:  {{$row['product_professor']}}</p>
 									</div> 
