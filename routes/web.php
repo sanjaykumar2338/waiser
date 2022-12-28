@@ -29,6 +29,9 @@ Route::get('/login', [HomeController::class, 'login']);
 Route::post('/login_submit', [HomeController::class, 'login_submit']);
 Route::get('/logout', [HomeController::class, 'logout']);
 
+Route::get('/terms_condition', [HomeController::class, 'terms_condition']);
+Route::get('/regulations', [HomeController::class, 'regulations']);
+
 Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
 
@@ -39,6 +42,7 @@ Route::get('/add_to_cart_detail/{station}/{package}/{member_id}/{title}/{data}',
 Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserController::class, 'course_selection_part']);
+Route::post('submit_payment', [UserController::class, 'submit_payment']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

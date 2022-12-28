@@ -386,4 +386,8 @@ class UserController extends Controller
             return '';
         }
     }
+
+    public function submit_payment(Request $request){
+        echo "<pre>"; print_r($request->all());
+    }
 }

@@ -89,6 +89,14 @@ class HomeController extends Controller
         return redirect('/home');
     }
 
+    public function terms_condition(Request $request){
+        return view('pages.terms_condition');
+    }
+
+    public function regulations(Request $request){
+        return view('pages.regulations');
+    }
+
     public function recovery_by_email(Request $request){
         
 

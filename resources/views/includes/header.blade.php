@@ -6,10 +6,6 @@
 					<li><a href="{{url('/')}}/my_account">MI CUENTA</a></li>
 					<li><a href="{{url('/')}}/logout">SALIR</a></li>
 				</ul>
-				@else
-				<ul class="d-flex flex-wrap align-itmes-center justify-content-end">
-					<li><a href="{{url('/')}}/login">Acceso</a></li>
-				</ul>
 				@endif
 			</div>
 	</div>

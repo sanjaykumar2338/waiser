@@ -52,7 +52,7 @@
 									@endphp
 
 									@if($url)
-										<img src="{{ $url }}"/>
+										<img width="184" height="127" src="{{ $url }}"/>
 									@else
 										<img src="{{ asset('public/assests/images/prd-1.jpg')}}"/>
 									@endif
@@ -91,7 +91,7 @@
 	</div> 
 
 	@if($cart)
-	<div class="carrito-cupn hide-mb">
+	<div class="carrito-cupn">
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-md-7">
@@ -131,30 +131,48 @@
 		</div>
 	</div>
 	
-
-	<div class="carrito-info hide-mb">
-		<div class="container">
-			<div class="carrito-chck">
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-					<label class="custom-control-label" for="customCheck1">Acepto los términos y condiciones de  los cursos.  <a href="#">Ver</a></label>
+	<!-- <div class="carrito-info hide-mb"> -->
+	<div class="carrito-info">
+		<form method="POST" name="payment_frm" id="payment_frm" action="{{url('submit_payment')}}">
+			@csrf
+			<input type="hidden" name="payment_type" value="" id="payment_type">
+			<div class="container">
+				<div class="carrito-chck">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="customCheck1" required="">
+						<label class="custom-control-label" for="customCheck1">Acepto los términos y condiciones de  los cursos.  <a href="{{url('/terms_condition')}}" target="_blank">Ver</a></label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="customCheck2" required="">
+						<label class="custom-control-label" for="customCheck2">Acepto los reglamentos de los cursos.  <a href="{{url('/regulations')}}" target="_blank">Ver</a></label>
+					</div>
 				</div>
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="customCheck2">
-					<label class="custom-control-label" for="customCheck2">Acepto los reglamentos de los cursos.  <a href="#">Ver</a></label>
+				<div class="reserva-bx">
+					<h3>Reserva y paga después </h3>
+					<p>El lugar se reserva por 48 horas. Se puede pagar en las cajas del Depor o por medio esta página en la sección de Mis inscripciones.</p>
+					<button class="payment_button" value="pay_later" type="submit">Reservar y pagar después</button>
+				</div>
+				<div class="reserva-bx">
+					<h3>Reserva y paga en linea ahora</h3>
+					<p>Formas de pago.</p>
+					<button class="payment_button" value="pay_online" type="submit">Reservar y pagar ahora en línea</button>
 				</div>
 			</div>
-			<div class="reserva-bx">
-				<h3>Reserva y paga después </h3>
-				<p>El lugar se reserva por 48 horas. Se puede pagar en las cajas del Depor o por medio esta página en la sección de Mis inscripciones.</p>
-				<a href="#">Reservar y pagar después</a>
-			</div>
-			<div class="reserva-bx">
-				<h3>Reserva y paga en linea ahora</h3>
-				<p>Formas de pago.</p>
-				<a href="#">Reservar y pagar ahora en línea</a>
-			</div>
-		</div>
+		</form>
 	</div>
+
+	<script type="text/javascript">
+		$('.payment_button').on('click', function(){
+			$('#payment_type').val($(this).val());
+		});
+
+		$("form").submit(function(e){
+	        e.preventDefault();
+	        setTimeout(function(){
+	        	$(this).unbind(e);
+	        	$('#payment_frm').submit();
+	        },300)
+	    });
+	</script>
 	@endif
 @stop

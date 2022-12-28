@@ -16,22 +16,22 @@
 									<input name="email" type="text" placeholder="Ingresa tu correo electrónico,  o número de socio">
 									<img class="lg-lft-ic hide-mb" src="{{ asset('public/assests/images/message 1.svg')}}">
 								</div>
-								<div class="tx-hg hide-mb">Recuperar el correo electrónico asociado a mi número de socio</div>
+								<a class="tx-hg hide-mb" href="{{url('/')}}/forget">Recuperar el correo electrónico asociado a mi número de socio</a>
 							</div>
 							<div class="lgn-field">
 								<label class="hide-mb">Contraseña</label>
 								<div class="lg-ff">
-									<input name="password" type="text" placeholder="Ingresa tu contraseña">
+									<input name="password" type="password" id="password" placeholder="Ingresa tu contraseña">
 									<img class="lg-lft-ic hide-mb" src="{{ asset('public/assests/images/padlock 1.svg')}}">
-									<img class="lg-rgt-ic hide-mb" src="{{ asset('public/assests/images/invisible 1.svg')}}">
+									<img class="lg-rgt-ic hide-mb togglePassword" src="{{ asset('public/assests/images/invisible 1.svg')}}">
 								</div>
-								<div class="tx-hg hide-mb">Olvidé mi contraseña</div>
+								<a class="tx-hg hide-mb" href="{{url('/')}}/forget">Olvidé mi contraseña</a>
 							</div>
 							<div class="lgn-sbt">
 								<input type="submit" value="Ingresar"/>
 							</div>
 							<div class="forgot-pass hide-ds">
-								<a href="#">Ólvide mi contraseña</a>
+								<a href="{{url('/')}}/forget">Ólvide mi contraseña</a>
 							</div>
 						</form>
 					</div>
@@ -47,6 +47,19 @@
 
 <script type="text/javascript">
 	$('.crt-btn').hide();
+	$('.header').hide();
+
+	const togglePassword = document.querySelector(".togglePassword");
+    const password = document.querySelector("#password");
+  
+    togglePassword.addEventListener("click", function () {
+        // toggle the type attribute
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        
+        // toggle the icon
+        //this.classList.toggle("bi-eye");
+    });
 </script>
 
 @stop
