@@ -74,10 +74,19 @@
 				@endif
 			</div>
 			@if($cart)
+
+				@php $deportiva = 0; $total_insurance_price = 0; @endphp
+				@foreach($cart as $key=>$row)
+					@php
+						$deportiva +=1;
+						$total_insurance_price += $row['insurance_price'];
+					@endphp
+				@endforeach
+
 				<div class="car-total">
 					<ul class="d-flex justify-content-end">
 						<li>Total </li>
-						<li>${{number_format($total, 2)}}</li>
+						<li>${{number_format($total + $total_insurance_price, 2)}}</li>
 					</ul>
 					<div class="car-btn-grp">
 						<a class="cart-btn" href="{{url('/checkout')}}">Checkout</a>

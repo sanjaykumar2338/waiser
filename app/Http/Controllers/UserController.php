@@ -375,7 +375,47 @@ class UserController extends Controller
                 ':socio' => $request->member_id
             ]);
 
+            $profile_info = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiPMembresiaIntegrantes :CoberturaMedica"),[
+                ':CoberturaMedica' => substr($request->member_id, 0, 5)
+            ]);
+
+            //echo "<pre>"; print_r($profile_info); die;
+            $insurance_user = '';
+            foreach($profile_info as $row){
+                if($row->Socio==$request->member_id){
+                    $insurance_user = $row;
+                }
+            }
+
+            //echo "<pre>"; print_r($insurance_user); die;
             $product_info = unserialize(urldecode($request->data));
+            //echo "<pre>"; print_r($product_info); die;
+
+            $insurance_price = 0.00;
+            $inusrance_required = 'no';
+
+            $inusrance_one_price = 0.00;
+            $inusrance_two_price = 0.00;
+
+            $inusrance_one_description = '';
+            $inusrance_two_description = '';
+
+            if($insurance_user->CoberturaMedica==0 && $product_info->RequiereCoberturaMedica=='Si'){
+                $inusrance_required = 'yes';
+
+                if($product_info->PeriodoActualCobMed==1){
+                    $insurance_price += $product_info->ImpteCoberturaActual;
+                    $inusrance_one_price = $product_info->ImpteCoberturaActual;
+                    $inusrance_one_description = $product_info->DescripcionCoberturaActual;
+                }
+
+                if($product_info->PeriodoSiguienteCobMed==1){
+                    $insurance_price += $product_info->ImpteCoberturaSiguiente;
+                    $inusrance_two_price = $product_info->ImpteCoberturaSiguiente;
+                    $inusrance_two_description = $product_info->DescripcionCoberturaSiguiente;
+                }
+            }
+
             $cart[$id] = [
                 "package" => $request->package,
                 "member_id" => $request->member_id,
@@ -388,7 +428,15 @@ class UserController extends Controller
                 "product_professor" => $product_info->NombreproProf,
                 "product_days" => $product_info->Lunes.' '.$product_info->Martes.' '.$product_info->Miercoles.' '.$product_info->Jueves.' '.$product_info->Viernes.' '.$product_info->Sabado.' '.$product_info->Domingo,
                 "product_time" => $product_info->Horario,
-                "product_image" => $product_info->SubCategoriaImagen
+                "product_image" => $product_info->SubCategoriaImagen,
+                'inicio' => $product_info->Inicio,
+                'fin' => $product_info->Fin,
+                'inusrance_required' => $inusrance_required,
+                'insurance_price' => $insurance_price,
+                'inusrance_two_price' => $inusrance_two_price,
+                'inusrance_two_description' => $inusrance_two_description,
+                'inusrance_one_price' => $inusrance_one_price,
+                'inusrance_one_description' => $inusrance_one_description
             ];
 
             session()->put('cart', $cart);
