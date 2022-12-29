@@ -2,7 +2,7 @@
 @section('content')
 	<div class="cmn-hero" style='background-image: url("{{ asset('public/assests/images/hero-banner.jpg')}}"'>
 		<div class="container">
-			<h2>Descripción del curso 1</h2>
+			<h2>{{$product->Descripcion}}</h2>
 		</div>
 	</div>
 	<div class="prd-main">
@@ -38,7 +38,7 @@
 					<div class="product-detail">
 						<div class="d-flex flex-wrap align-items-center justify-content-between prd-prc">
 							<h3>Precio: ${{number_format($product->Precio, 2)}}</h3>
-							<p class="lugares"><span></span>{{$product->Cupo}} LUGARES DISPONIBLES DE {{$product->Disponible}}</p>
+							<p class="lugares"><span></span>{{$product->Disponible}} LUGARES DISPONIBLES DE {{$product->Cupo}}</p>
 						</div>
 						<ul>
 							<li>HORARIO:<strong>{{$product->Horario}} {{$product->Lunes}} {{$product->Martes}} {{$product->Miercoles}} {{$product->Jueves}} {{$product->Viernes}} {{$product->Sabado}} {{$product->Domingo}}</strong></li>
@@ -50,8 +50,8 @@
 							<li>ESPACIO:<strong>{{$product->Espacio}}</strong></li>
 							<li>profesor:<strong>{{$product->NombreproProf}}</strong></li>
 							<li>género:<strong>{{$product->CDISexo}}</strong></li>
-							<li>edad máxima:<strong>{{$product->CDIEdadMaxima}}</strong></li>
 							<li>edad mínima:<strong>{{$product->CDIEdadMinimam}}</strong></li>
+							<li>edad máxima:<strong>{{$product->CDIEdadMaxima}}</strong></li>
 							<li>nivel:<strong>{{$product->Nivel}}</strong></li>
 							<li>requiere cobertura médica:<strong>{{$product->RequiereCoberturaMedica}}</strong></li>
 							<li>PAQUETE:<strong>{{$product->Paquete}}</strong></li>

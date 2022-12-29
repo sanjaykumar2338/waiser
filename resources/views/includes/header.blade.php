@@ -19,12 +19,14 @@
 				  
 				  <div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
+						@if(Session::has('user_id'))
 					  <li class="nav-item">
-						<a class="nav-link active" href="{{url('/')}}">INICIO</a>
+						<a class="nav-link active" href="{{url('/my_account')}}">INICIO</a>
 					  </li>
 					  <li class="nav-item">
-						<a class="nav-link" href="{{url('/mis-inscripciones')}}">NUEVA INSCRIPCIÓN</a>
+						<a class="nav-link" href="{{url('/my_account')}}">NUEVA INSCRIPCIÓN</a>
 					  </li>
+					  @endif
 					  <li class="nav-item">
 						<a class="nav-link" href="{{url('/mis-inscripciones')}}">MIS INSCRIPCIONES</a>
 					  </li>    

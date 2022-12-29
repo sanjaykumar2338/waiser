@@ -105,6 +105,15 @@
 						</form>
 					</div>
 				</div>
+
+				@php $deportiva = 0; $total_insurance_price = 0; @endphp
+				@foreach($cart as $key=>$row)
+					@php
+						$deportiva +=1;
+						$total_insurance_price += $row['insurance_price'];
+					@endphp
+				@endforeach
+
 				<div class="col-md-5">
 					<div class="subtotal">
 						<table>
@@ -112,17 +121,23 @@
 								<td>Subtotal</td>
 								<td><strong>${{number_format($total, 2)}}</strong></td>
 							</tr>
+
+							@if($total_insurance_price)
 							<tr>
-								<td>Cobertura </br>deportiva x 1</td>
-								<td><strong>$326.00</strong></td>
+								<td>Cobertura </br>deportiva x {{$deportiva}}</td>
+								<td><strong>${{number_format($total_insurance_price, 2)}}</strong></td>
 							</tr>
+							@endif
+
+							@if(false)
 							<tr>
 								<td>Descuentos</td>
 								<td><strong>-$100.00</strong></td>
 							</tr>
+							@endif
 							<tr>
 								<td>Total </td>
-								<td><strong>${{number_format($total, 2)}}</strong></td>
+								<td><strong>${{number_format($total + $total_insurance_price, 2)}}</strong></td>
 							</tr>
 						</table>
 					</div>
