@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<div class="prd-main">
-		<div class="cl-tp hide-mb">
+		<div class="cl-tp">
 			<div class="container">
 				<p>Socio seleccionado: <strong>{{$member_info->Nombre}}</strong></p>
 			</div>

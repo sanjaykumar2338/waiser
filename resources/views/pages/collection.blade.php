@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="cl-left-side">
-							<h3 class="cl-title">{{$coordinacion}} <a href="{{url('/')}}/my_account" class="brd-color">Cambiar</a></h3>
+							<h3 class="cl-title">{{$coordinacion}} <a href="{{url('/course_selection')}}/{{$current_member->Socio}}" class="brd-color">Cambiar</a></h3>
 							
 							<form name="filter_frm" method="GET" action="{{URL('/course_selection_part')}}/{{$current_member->Socio}}/{{$coordinacion}}" class="filter_frm">	
 
@@ -100,7 +100,7 @@
 											@endif
 										</div>
 										<div class="cl-pd-ct prd-content">
-											<div style="min-height: 290px;">
+											<div style="min-height: 250px;">
 												<h2 class="brd-color">{{$row->Descripcion}}</h2>
 												<h2>Precio:  ${{number_format($row->Precio, 2)}}</h2>
 												<ul class="prd-tm d-flex flex-wrap">
@@ -120,7 +120,7 @@
 								</div>
 							@endforeach
 						@else
-							ningún record fue encontrado !
+							No hay resultados en base a tu seleccion.
 						@endif
 						</div>
 					</div>

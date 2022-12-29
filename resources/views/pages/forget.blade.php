@@ -47,5 +47,6 @@
 
 	<script type="text/javascript">
 		$('.crt-btn').hide();
+		$('#collapsibleNavbar').remove();
 	</script>
 @stop
