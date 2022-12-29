@@ -17,7 +17,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
@@ -42,7 +42,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
@@ -67,7 +67,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
@@ -95,7 +95,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
@@ -122,7 +122,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
@@ -149,7 +149,7 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img height="212" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
 											<img height="212" src="{{ $member->image_url }}"/>
 										@endif
