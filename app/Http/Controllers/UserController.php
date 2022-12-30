@@ -310,7 +310,17 @@ class UserController extends Controller
             $inusrance_one_description = '';
             $inusrance_two_description = '';
 
-            if($insurance_user->CoberturaMedica==0 && $product_info->RequiereCoberturaMedica=='Si'){
+            $has_insuracne_already_added = false;
+            if($cart){
+                foreach ($cart as $value) {
+                    if($value['member_id']==$request->member_id && $value['inusrance_required']=='yes'){
+                        $has_insuracne_already_added = true;
+                        break;
+                    }
+                }
+            }
+
+            if(@$insurance_user->CoberturaMedica==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added){
                 $inusrance_required = 'yes';
 
                 if($product_info->PeriodoActualCobMed==1){

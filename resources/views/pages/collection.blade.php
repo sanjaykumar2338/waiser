@@ -120,7 +120,7 @@
 								</div>
 							@endforeach
 						@else
-							No hay resultados en base a tu seleccion.
+							No hay resultados en base a tu selección.
 						@endif
 						</div>
 					</div>

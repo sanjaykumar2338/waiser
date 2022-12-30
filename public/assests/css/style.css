@@ -445,6 +445,7 @@ span.prd-tm {
 }
 .intergrante-img img {
     width: 100%;
+    height: 250px;
 }
 
 .intergrante-contnet {
@@ -1365,6 +1366,9 @@ ul.prd-tm li::before {
 a.crt-btn {
     display: block;
 }
+.intergrante-img img {
+    height: 100px;
+}
 .navbar-collapse {
     position: absolute;
     left: 0;
@@ -1581,6 +1585,7 @@ span.prd-tm {
 
 .intergrante-img {
     width: 90px;
+    object-fit: cover;
 }
 
 .intergrante-contnet {

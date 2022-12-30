@@ -17,9 +17,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -42,9 +42,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -67,9 +67,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -95,9 +95,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -122,9 +122,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
@@ -149,9 +149,9 @@
 								<div class="intergrante-box">
 									<div class="intergrante-img">
 										@if($member->image_url=="")
-											<img height="300" src="{{ asset('public/assests/images/avtar.jpg')}}"/>
+											<img  src="{{ asset('public/assests/images/avtar.jpg')}}"/>
 										@else
-											<img height="300" src="{{ $member->image_url }}"/>
+											<img  src="{{ $member->image_url }}"/>
 										@endif
 									</div>
 									@php
