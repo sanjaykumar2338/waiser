@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserController::class, 'course_selection_part']);
 Route::post('submit_payment', [UserController::class, 'submit_payment']);
+
+Route::get('/coupon/index/{secret}', [CouponController::class, 'index']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

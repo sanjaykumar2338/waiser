@@ -320,20 +320,20 @@ class UserController extends Controller
                 }
             }
 
-            if(@$insurance_user->CoberturaMedica==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added){
-                $inusrance_required = 'yes';
+            if($insurance_user->CoberturaActual==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added && $product_info->PeriodoActualCobMed==1){
 
-                if($product_info->PeriodoActualCobMed==1){
+                    $inusrance_required = 'yes';
                     $insurance_price += $product_info->ImpteCoberturaActual;
                     $inusrance_one_price = $product_info->ImpteCoberturaActual;
                     $inusrance_one_description = $product_info->DescripcionCoberturaActual;
-                }
+            }
 
-                if($product_info->PeriodoSiguienteCobMed==1){
+            if($insurance_user->CoberturaSiguiente==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added && $product_info->PeriodoSiguienteCobMed==1){
+
+                    $inusrance_required = 'yes';
                     $insurance_price += $product_info->ImpteCoberturaSiguiente;
                     $inusrance_two_price = $product_info->ImpteCoberturaSiguiente;
                     $inusrance_two_description = $product_info->DescripcionCoberturaSiguiente;
-                }
             }
 
             $cart[$id] = [
@@ -410,20 +410,30 @@ class UserController extends Controller
             $inusrance_one_description = '';
             $inusrance_two_description = '';
 
-            if($insurance_user->CoberturaMedica==0 && $product_info->RequiereCoberturaMedica=='Si'){
-                $inusrance_required = 'yes';
+            $has_insuracne_already_added = false;
+            if($cart){
+                foreach ($cart as $value) {
+                    if($value['member_id']==$request->member_id && $value['inusrance_required']=='yes'){
+                        $has_insuracne_already_added = true;
+                        break;
+                    }
+                }
+            }
 
-                if($product_info->PeriodoActualCobMed==1){
+            if($insurance_user->CoberturaActual==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added && $product_info->PeriodoActualCobMed==1){
+
+                    $inusrance_required = 'yes';
                     $insurance_price += $product_info->ImpteCoberturaActual;
                     $inusrance_one_price = $product_info->ImpteCoberturaActual;
                     $inusrance_one_description = $product_info->DescripcionCoberturaActual;
-                }
+            }
 
-                if($product_info->PeriodoSiguienteCobMed==1){
+            if($insurance_user->CoberturaSiguiente==0 && @$product_info->RequiereCoberturaMedica=='Si' && !$has_insuracne_already_added && $product_info->PeriodoSiguienteCobMed==1){
+
+                    $inusrance_required = 'yes';
                     $insurance_price += $product_info->ImpteCoberturaSiguiente;
                     $inusrance_two_price = $product_info->ImpteCoberturaSiguiente;
                     $inusrance_two_description = $product_info->DescripcionCoberturaSiguiente;
-                }
             }
 
             $cart[$id] = [
