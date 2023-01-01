@@ -46,6 +46,7 @@ Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserCon
 Route::post('submit_payment', [UserController::class, 'submit_payment']);
 
 Route::get('/coupon/index/{secret}', [CouponController::class, 'index']);
+Route::get('/coupon/add_coupon', [CouponController::class, 'add_coupon']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

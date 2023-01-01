@@ -21,4 +21,8 @@ class CouponController extends Controller
 		//	echo "page not found!!!";
 		//}
 	}
+
+	public function add_coupon(Request $request){
+		return view('pages.coupon.add');
+	}
 }

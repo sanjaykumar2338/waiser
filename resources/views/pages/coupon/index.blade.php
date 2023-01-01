@@ -22,18 +22,22 @@
 				
 			</div>
 	</div>
+
 	<div class="socioss coupon">
+
 		<div class="container">
+
 			<div class="rowss">
+                 <a href="{{url('/coupon/add_coupon')}}" class="btn btn-primary" style="float: right;margin-top: 35px;">Add Coupon</a>
 				<table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>Coupon Code</th>
+                <th>Coupon Name</th>
+                <th>Expiration date</th>
+                <th>Type Fixed or Percentage</th>
+                <th>Discount amount</th>
+                <th>Acumulable</th>
             </tr>
         </thead>
         <tbody>
