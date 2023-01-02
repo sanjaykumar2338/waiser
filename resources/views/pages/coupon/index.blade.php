@@ -6,6 +6,10 @@
 			padding-top: 100px;
 		}	
 
+        .ftr-bg{
+            margin-top: 150px;
+        }
+
 		#example_filter{
 			float: right;
 		}
@@ -23,6 +27,11 @@
 			</div>
 	</div>
 
+    @if (Session::has('cart_message'))
+        <div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+        @php Session::forget('cart_message'); @endphp
+    @endif
+
 	<div class="socioss coupon">
 
 		<div class="container">
@@ -32,87 +41,32 @@
 				<table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
+                <th>#ID</th>
                 <th>Coupon Code</th>
                 <th>Coupon Name</th>
                 <th>Expiration date</th>
-                <th>Type Fixed or Percentage</th>
+                <th>Type</th>
                 <th>Discount amount</th>
                 <th>Acumulable</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011-04-25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011-07-25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009-01-12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012-03-29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008-11-28</td>
-                <td>$162,700</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012-12-02</td>
-                <td>$372,000</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012-08-06</td>
-                <td>$137,500</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010-10-14</td>
-                <td>$327,900</td>
-            </tr>
-            <tr>
-                <td>Colleen Hurst</td>
-                <td>Javascript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009-09-15</td>
-                <td>$205,500</td>
-            </tr>
+            @if($coupons)
+                @foreach($coupons as $coupon)
+                    @php //echo "<pre>"; print_r($coupon); die(); @endphp
+                    <tr>
+                        <td>{{$coupon->Id}}</td>
+                        <td>{{$coupon->CodigoCupon}}</td>
+                        <td>{{$coupon->NombreCupon}}</td>
+                        <td>{{date('Y-m-d',strtotime($coupon->FechaCaducidad))}}</td>
+                        <td>{{$coupon->Tipo}}</td>
+                        <td>{{($coupon->Tipo=='Fixed'?'$'.number_format($coupon->Cantidad, 2) : ' '.number_format($coupon->Cantidad,2))}}</td>
+                        <td>{{$coupon->Acumulable==1?'Yes':'No'}}</td>
+                        <td><a href="{{url('coupon/edit/')}}/{{$coupon->Id}}">Edit</a> | <a onclick="return confirm('Estas segura?')" href="{{url('coupon/delete/')}}/{{$coupon->Id}}">Delete</a></td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 			</div>

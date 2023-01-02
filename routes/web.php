@@ -47,6 +47,10 @@ Route::post('submit_payment', [UserController::class, 'submit_payment']);
 
 Route::get('/coupon/index/{secret}', [CouponController::class, 'index']);
 Route::get('/coupon/add_coupon', [CouponController::class, 'add_coupon']);
+Route::get('/coupon/edit/{id}', [CouponController::class, 'edit_coupon']);
+Route::get('/coupon/delete/{id}', [CouponController::class, 'delete_coupon']);
+Route::post('/coupon/save', [CouponController::class, 'save']);
+Route::post('/coupon/update/{id}', [CouponController::class, 'update']);
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)

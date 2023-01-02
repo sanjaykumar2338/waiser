@@ -28,41 +28,40 @@
 		<div class="container">
 
 			<div class="rowss">
-                
                 <a href="{{url('/coupon/index/9z$C&F)J@NcRfUjX')}}" class="btn btn-primary" style="float: right;margin-top: 35px;">Back</a>
-                <form class="add_frm" name="save_frm" method="post" action="{{url('coupon/save')}}">
-                  @csrf  
-                  <h3>Add Coupon</h3>
+                <form class="add_frm" name="save_frm" method="post" action="{{url('coupon/update')}}/{{$coupon->Id}}">
+                  @csrf
+                   <h3>Edit Coupon</h3>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Coupon Name</label>
-                    <input type="text" class="form-control" id="" required name="coupon_name" aria-describedby="couponNameHelp" placeholder="Enter Coupon Name">
+                    <input type="text" class="form-control" value="{{$coupon->NombreCupon}}" id="" required name="coupon_name" aria-describedby="couponNameHelp" placeholder="Enter Coupon Name">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Coupon Code</label>
-                    <input type="text" class="form-control" id="" required name="coupon_code" aria-describedby="couponCodeHelp" placeholder="Enter Coupon Code">
+                    <input type="text" class="form-control" value="{{$coupon->CodigoCupon}}" id="" required name="coupon_code" aria-describedby="couponCodeHelp" placeholder="Enter Coupon Code">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Expiration Date</label>
-                    <input type="date" class="form-control" id="" required name="expire_date" aria-describedby="couponCodeHelp">
+                    <label for="exampleInputEmail1">Expiration Date</label>{{$coupon->FechaCaducidad}}
+                    <input type="date" class="form-control" value="{{date('Y-M-D',strtotime($coupon->FechaCaducidad))}}" id="" required name="expire_date" aria-describedby="couponCodeHelp">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Type</label>
                     <select class="form-control" required name="type" aria-label="Default select example">
                       <option selected>Open this select menu</option>
-                      <option value="Fixed">Fixed</option>
-                      <option value="Percentage">Percentage</option>
+                      <option {{$coupon->Tipo=='Fixed'?'selected':''}} value="Fixed">Fixed</option>
+                      <option {{$coupon->Tipo=='Percentage'?'selected':''}} value="Percentage">Percentage</option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Discount amount</label>
-                    <input type="number" class="form-control" id="" required name="discount_amount" aria-describedby="couponCodeHelp">
+                    <input type="number" class="form-control" step="0.01" value="{{number_format($coupon->Cantidad,2)}}" id="" required name="discount_amount" aria-describedby="couponCodeHelp">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Coupon Use With Other</label>
+                    <label for="exampleInputEmail1">Coupon User With Other</label>
                     <select class="form-control" required name="user_with" aria-label="Default select example">
                       <option selected>Open this select menu</option>
-                      <option value="0">No</option>
-                      <option value="1">Yes</option>
+                      <option {{$coupon->Acumulable=='0'?'selected':''}} value="0">No</option>
+                      <option {{$coupon->Acumulable=='1'?'selected':''}} value="1">Yes</option>
                     </select>
                   </div>
                   <button type="submit" class="btn btn-primary">Save Coupon</button>
