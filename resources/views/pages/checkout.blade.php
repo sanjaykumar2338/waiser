@@ -99,8 +99,9 @@
 						<h3>CUPONES</h3>
 						<form>
 							<div class="coupon-field">
-								<input type="text" placeholder="Ingresar cupón"/>
-								<button>Agregar</button>
+								<input type="text" id="coupon_value" placeholder="Ingresar cupón"/>
+								<button id="coupon_apply">Agregar</button>
+								<span style="color: cadetblue;font-weight: 800;" id="coupon_message"></span>
 							</div>
 						</form>
 					</div>
@@ -142,6 +143,20 @@
 						</table>
 					</div>
 				</div>
+
+				<div class="col-md-5">
+					Coupon:
+					<div class="subtotal">
+						<table>
+							<tr>
+								<td>Coupn</td>
+								<td><strong>${{number_format($total, 2)}}</strong></td>
+							</tr>
+						</table>
+					</div>
+
+					<br/><br/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -176,6 +191,7 @@
 		</form>
 	</div>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$('.payment_button').on('click', function(){
 			$('#payment_type').val($(this).val());
@@ -188,6 +204,31 @@
 	        	$('#payment_frm').submit();
 	        },300)
 	    });
+
+	    $('#coupon_apply').on('click', function(e){
+	    	e.preventDefault();
+	        let coupon_value = $('#coupon_value').val();
+	        if(coupon_value!=""){
+
+	        	coupon_value = coupon_value.trim();
+	            CSRF_TOKEN = "{{ csrf_token() }}"
+	            //$('#coupon_apply').prop('disabled', true);
+
+	        	$.ajax({
+                    url: "{{url('/apply_coupon')}}",
+                    type: 'POST',
+                    data: {_token: CSRF_TOKEN, coupon:coupon_value},
+                    dataType: 'JSON',
+                    success: function (data) { 
+                    	//$('#coupon_apply').prop('disabled', false);
+                        $("#coupon_message").html(data.msg); 
+                        setTimeout(function(){
+                        	$("#coupon_message").html(''); 
+                        },2500);
+                    }
+                }); 
+	        }
+    	});
 	</script>
 	@endif
 @stop

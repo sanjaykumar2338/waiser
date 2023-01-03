@@ -268,6 +268,23 @@ class UserController extends Controller
         return Redirect::back();
     }
 
+    public function update_password(Request $request){
+
+        try{
+            $change_password = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiNewUpdatePasswd :contrasena,:Socio,:email1"),[
+                ':contrasena' => $request->password,
+                ':Socio' => Session::get('membresia'),
+                ':email1' => Session::get('member_email')
+            ]);
+
+            Session::put('cart_message', 'Cambio de contraseña con éxito');
+            return Redirect::back();
+        }catch(\Exception $e){
+            Session::put('cart_message', $e->getMessage());
+            return Redirect::back();
+        }
+    }
+
     public function add_to_cart(Request $request){
         $cart = session()->get('cart', []);
         $id = $request->package.'M'.$request->member_id;

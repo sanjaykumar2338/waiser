@@ -48,6 +48,7 @@ class HomeController extends Controller
             ':socio' => $request->member_id
         ]);
 
+        //echo "<pre>"; print_r($member_info); die;
         //echo "<pre>"; print_r($request->title); die;
         return view('pages.product')->with('product',$product)->with('member_info',$member_info[0])->with('station',$request->station)->with('package',$request->package)->with('title',$request->title)->with('coordinacion',$request->title)->with('product_data',urlencode(serialize($product)));
     }
@@ -65,6 +66,14 @@ class HomeController extends Controller
     }
 
     public function mi_cuenta(Request $request){
+        $member_id = Session::get('user_id');
+        
+        if(!$member_id){
+            //dd(session()->all());
+            Session::flash('message', 'por favor inicie sesión primero.');
+            return redirect('/login');
+        }
+
         return view('pages.mi-cuenta');
     }
 
@@ -186,17 +195,37 @@ class HomeController extends Controller
                 ':contrasena' => $request->password
             ]);
 
-            //echo "<pre>"; print_r($rec); die;            
+            //echo "<pre>"; print_r($rec); die; 
+
             if($rec){
-                Session::put('user_id', $rec[0]->Socio);
-                Session::put('membresia', $rec[0]->Membresia);
-                //echo "<pre>"; print_r($rec); die;
-                //dd(session()->all());
-                $message = 'Inicie sesión con éxito.';
-                Session::flash('message', $message);
-                return redirect('/my_account');
+
+                $member_id = substr($rec[0]->Socio, 0, 5);
+                $members = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiPMembresiaIntegrantes :membresia"),[
+                    ':membresia' => $member_id
+                ]);
+
+                if($members){
+                    $member_info = DB::connection('sqlsrv')->select(DB::raw("exec xpValidaUsuario :socio"),[
+                        ':socio' => $rec[0]->Socio
+                    ]);
+
+                    Session::put('user_id', $rec[0]->Socio);
+                    Session::put('membresia', $rec[0]->Membresia);
+                    Session::put('member_name', $member_info[0]->Nombre);
+                    Session::put('member_email', $member_info[0]->Email);
+
+                    //echo "<pre>"; print_r($rec); die;
+                    //dd(session()->all());
+                    $message = 'Inicie sesión con éxito.';
+                    Session::flash('message', $message);
+                    return redirect('/my_account');
+                }else{
+                   $message = 'Número de socio dado de baja. Favor de contactar al comité de socios.';
+                   Session::put('cart_message', $message);
+                   return redirect('/login'); 
+                }
             }else{
-                $message = 'error de inicio de sesion.';
+                $message = 'Usuario o contraseña incorrectos';
                 Session::flash('message', $message);
                 return redirect('/login');
             }

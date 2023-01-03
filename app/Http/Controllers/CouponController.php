@@ -27,7 +27,10 @@ class CouponController extends Controller
 	public function save(Request $request){
 
 		//echo "<pre>"; print_r($request->all()); die();
-		$date = date('Y-m-d',strtotime($request->expire_date));
+		//$now = \DateTime::createFromFormat('U.u', microtime(true));
+		//$date = $now->format("Y-m-d H:i:s.u");
+
+		$date = '2013-09-18 00:00:00.000'; //date('Y-m-d',strtotime($request->expire_date));
 		//echo $date; die;
 		try{
 			$sql = "INSERT INTO dbo.CDICupones (CodigoCupon,NombreCupon,FechaCaducidad,Tipo,Cantidad,Acumulable) VALUES ('$request->coupon_code','$request->coupon_name',$date,'$request->type','$request->discount_amount','$request->user_with')";
@@ -137,5 +140,47 @@ class CouponController extends Controller
 			Session::put('cart_message', $message);
             return redirect('/coupon/index/9z$C&F)J@NcRfUjX');
 		}
+	}
+
+	public function applyCoupon(Request $request){
+		$sql = "SELECT * FROM dbo.CDICupones WHERE CodigoCupon='".$request->coupon."'";
+		$coupon = DB::connection('sqlsrv')->select(DB::raw($sql));
+
+		if(!$coupon){
+			$response = array(
+	          'status' => 'success',
+	          'msg' => 'Cupón no válido'
+	      	);
+	      	return response()->json($response);
+		}
+
+      	$cart = session()->get('cart', []);
+      	if(isset($cart[$coupon[0]->Id])){
+      		$response = array(
+	          'status' => 'success',
+	          'msg' => 'Cupón ya aplicado'
+	      	);
+
+	      	return response()->json($response);
+      	}
+		
+
+		$cart[$coupon[0]->Id] = [
+                "coupon_id" => $coupon[0]->Id,
+                "coupon_name" => $coupon[0]->NombreCupon,
+                "coupon_type" => $coupon[0]->Tipo,
+                "coupon_amount" => $request->Cantidad,
+                "coupon_expiry_date" => $request->FechaCaducidad
+            ];
+
+        //echo "<pre>"; print_r($cart); die;
+        session()->put('cart', $cart);
+
+        $response = array(
+	          'status' => 'success',
+	          'msg' => 'Cupón no válido'
+      	);
+      	
+      	return response()->json($response);
 	}
 }

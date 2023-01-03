@@ -1,5 +1,12 @@
 @extends('layouts.homepage')
 @section('content')
+	
+	@if (Session::has('cart_message'))
+		<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+		@php Session::forget('cart_message'); @endphp
+	@endif
+
+
 	<div class="login-page">
 		<div class="container">
 			<div class="row row-reverse-mb">

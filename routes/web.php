@@ -36,6 +36,8 @@ Route::get('/regulations', [HomeController::class, 'regulations']);
 Route::post('/recovery_by_email', [HomeController::class, 'recovery_by_email']);
 Route::post('/recovery_by_socio', [HomeController::class, 'recovery_by_socio']);
 
+
+Route::post('/update_password', [UserController::class, 'update_password']);
 Route::get('/my_account', [UserController::class, 'my_account']);
 Route::get('/add_to_cart/{station}/{package}/{member_id}/{title}/{data}', [UserController::class, 'add_to_cart']);
 Route::get('/add_to_cart_detail/{station}/{package}/{member_id}/{title}/{data}', [UserController::class, 'add_to_cart_detail']);
@@ -51,6 +53,9 @@ Route::get('/coupon/edit/{id}', [CouponController::class, 'edit_coupon']);
 Route::get('/coupon/delete/{id}', [CouponController::class, 'delete_coupon']);
 Route::post('/coupon/save', [CouponController::class, 'save']);
 Route::post('/coupon/update/{id}', [CouponController::class, 'update']);
+
+Route::post('/apply_coupon',[CouponController::class,'applyCoupon']);
+
 
 Route::get('send_test_email', function(){
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
