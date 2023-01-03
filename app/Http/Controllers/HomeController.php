@@ -217,7 +217,7 @@ class HomeController extends Controller
                     //echo "<pre>"; print_r($rec); die;
                     //dd(session()->all());
                     $message = 'Inicie sesión con éxito.';
-                    Session::flash('message', $message);
+                    Session::put('cart_message', $message);
                     return redirect('/my_account');
                 }else{
                    $message = 'Número de socio dado de baja. Favor de contactar al comité de socios.';
@@ -226,11 +226,11 @@ class HomeController extends Controller
                 }
             }else{
                 $message = 'Usuario o contraseña incorrectos';
-                Session::flash('message', $message);
+                Session::put('cart_message', $message);
                 return redirect('/login');
             }
         }catch(\Exceptions $e){
-            Session::flash('message', $e->getMessage());
+            Session::put('cart_message', $e->getMessage());
             return Redirect::back();
         }            
     }

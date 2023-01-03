@@ -1,5 +1,10 @@
 @extends('layouts.homepage')
 @section('content')
+
+	@if (Session::has('cart_message'))
+		<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+		@php Session::forget('cart_message'); @endphp
+	@endif
 	<div class="cmn-hero" style='background-image: url("{{ asset('public/assests/images/hero-banner.jpg')}}"'>
 		<div class="container">
 			<h2>{{$product->Descripcion}}</h2>

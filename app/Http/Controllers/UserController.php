@@ -271,16 +271,28 @@ class UserController extends Controller
     public function update_password(Request $request){
 
         try{
+
+            $member_email = Session::get('member_email');
+            $socio = Session::get('user_id');
+
+            $sql = "UPDATE dbo.cte SET contrasena='$request->password' WHERE Socio = '$socio' and email1='$member_email'";
+            $update_query = DB::select(DB::raw($sql));
+
+            /*
             $change_password = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiNewUpdatePasswd :contrasena,:Socio,:email1"),[
                 ':contrasena' => $request->password,
                 ':Socio' => Session::get('membresia'),
                 ':email1' => Session::get('member_email')
-            ]);
+            ]);*/
 
             Session::put('cart_message', 'Cambio de contraseña con éxito');
             return Redirect::back();
         }catch(\Exception $e){
-            Session::put('cart_message', $e->getMessage());
+            $message = $e->getMessage();
+            if(strpos($message,'The active result for the query contains no fields')){
+                $message = 'Cambio de contraseña con éxito';
+            }
+            Session::put('cart_message', $message);
             return Redirect::back();
         }
     }

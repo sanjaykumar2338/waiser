@@ -30,7 +30,7 @@ class CouponController extends Controller
 		//$now = \DateTime::createFromFormat('U.u', microtime(true));
 		//$date = $now->format("Y-m-d H:i:s.u");
 
-		$date = '2013-09-18 00:00:00.000'; //date('Y-m-d',strtotime($request->expire_date));
+		$date = "'".date('Y-m-d')."'";
 		//echo $date; die;
 		try{
 			$sql = "INSERT INTO dbo.CDICupones (CodigoCupon,NombreCupon,FechaCaducidad,Tipo,Cantidad,Acumulable) VALUES ('$request->coupon_code','$request->coupon_name',$date,'$request->type','$request->discount_amount','$request->user_with')";
@@ -180,7 +180,7 @@ class CouponController extends Controller
 	          'status' => 'success',
 	          'msg' => 'Cupón no válido'
       	);
-      	
+
       	return response()->json($response);
 	}
 }

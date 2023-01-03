@@ -5,6 +5,10 @@
 			<h2>Mis inscripciones</h2>
 		</div>
 	</div>
+	@if (Session::has('cart_message'))
+		<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+		@php Session::forget('cart_message'); @endphp
+	@endif
 	<div class="carrito">
 		<div class="container">
 			<div class="row">

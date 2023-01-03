@@ -6,6 +6,10 @@
 			<p class="hide-mb">Puedes repetir este proceso para todas las inscripciones que necesites</p>
 		</div>
 	</div>
+	@if (Session::has('cart_message'))
+		<div class="alert alert-info">{{ Session::get('cart_message') }}</div>
+		@php Session::forget('cart_message'); @endphp
+	@endif
 	<div class="intergrante-main">
 		<div class="container">
 			<div class="row">
