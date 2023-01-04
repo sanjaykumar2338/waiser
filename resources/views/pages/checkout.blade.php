@@ -30,13 +30,14 @@
 
 			@php
 				$cart = session()->get('cart', []);
+				//echo "<pre>"; print_r($cart); die;
 				$total = 0.00;
 			@endphp	
 
-			@if($cart)
+			@if($cart && request()->session()->has('cart'))
 					@foreach($cart as $key=>$row)
 					  @php
-					  	//echo "<pre>"; print_r($row); die;
+					  	//echo "<pre>"; print_r($cart); die;
 					  	$total += $row['product_price'];
 					  @endphp
 					<div class="row align-items-center">
@@ -90,7 +91,7 @@
 		</div> 
 	</div> 
 
-	@if($cart)
+	@if($cart && request()->session()->has('cart'))
 	<div class="carrito-cupn">
 		<div class="container">
 			<div class="row align-items-center">
@@ -130,20 +131,21 @@
 							</tr>
 							@endif
 
-							@if(false)
+							@if($coupon_discount)
 							<tr>
 								<td>Descuentos</td>
-								<td><strong>-$100.00</strong></td>
+								<td><strong>-${{number_format($coupon_discount, 2)}}</strong></td>
 							</tr>
 							@endif
 							<tr>
 								<td>Total </td>
-								<td><strong>${{number_format($total + $total_insurance_price, 2)}}</strong></td>
+								<td><strong>${{number_format($total + $total_insurance_price - $coupon_discount, 2)}}</strong></td>
 							</tr>
 						</table>
 					</div>
 				</div>
 
+				@if(false)
 				<div class="col-md-5">
 					Coupon:
 					<div class="subtotal">
@@ -157,6 +159,7 @@
 
 					<br/><br/>
 				</div>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -222,8 +225,12 @@
                     success: function (data) { 
                     	//$('#coupon_apply').prop('disabled', false);
                         $("#coupon_message").html(data.msg); 
+                        $('#coupon_value').val('');
                         setTimeout(function(){
                         	$("#coupon_message").html(''); 
+                        	if(data.status=='success'){
+                        		window.location.reload();
+                        	}
                         },2500);
                     }
                 }); 

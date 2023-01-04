@@ -114,7 +114,11 @@
 												</div>
 												<h3>{{$row->Disponible}} lugares disponibles de {{$row->Cupo}}</h3>
 											</div>
+											@if($row->Disponible==0)
+											<a style="background-color: red;" classs="add_to_cart" href="javascript:void(0)">Curso agotado</a>
+											@else
 											<a classs="add_to_cart" href="{{url('add_to_cart')}}/{{$row->Estacion}}/{{$row->Paquete}}/{{$current_member->Socio}}/{{$coordinacion}}/{{$product_info}}">Agregar al carrito</a>
+											@endif
 										</div>
 									</div>
 								</div>

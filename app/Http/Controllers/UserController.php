@@ -24,7 +24,7 @@ class UserController extends Controller
         
         if(!$member_id){
             //dd(session()->all());
-            Session::flash('message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'por favor inicie sesión primero.');
             return redirect('/login');
         }
     }
@@ -37,7 +37,7 @@ class UserController extends Controller
     public function my_account(Request $request){
         $member_id = Session::get('user_id');
         if(!$member_id){
-            Session::flash('message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'por favor inicie sesión primero.');
             return Redirect::back();
         }
 
@@ -49,7 +49,7 @@ class UserController extends Controller
 
         //echo "<pre>"; print_r($members); die;
         if(!$members){
-            Session::flash('message', 'ningún record fue encontrado.');
+            Session::put('cart_message', 'ningún record fue encontrado.');
             return Redirect::back();
         }
 
@@ -100,7 +100,7 @@ class UserController extends Controller
         
         if(!$member_id){
             //dd(session()->all());
-            Session::flash('message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'por favor inicie sesión primero.');
             return redirect('/login');
         }
 
@@ -130,7 +130,7 @@ class UserController extends Controller
         
         if(!$member_id){
             //dd(session()->all());
-            Session::flash('message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'por favor inicie sesión primero.');
             return redirect('/login');
         }
 

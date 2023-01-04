@@ -61,7 +61,12 @@
 							<li>requiere cobertura médica:<strong>{{$product->RequiereCoberturaMedica}}</strong></li>
 							<li>PAQUETE:<strong>{{$product->Paquete}}</strong></li>
 						</ul>
+
+						@if($product->Disponible==0)
+						<a class="cart-btn blue-btn" style="background-color: red;" href="javascript:void(0)">Curso agotado</a>
+						@else
 						<a class="cart-btn blue-btn" href="{{url('add_to_cart_detail')}}/{{$station}}/{{$package}}/{{$member_info->Socio}}/{{$coordinacion}}/{{$product_data}}">Agregar al carrito</a>
+						@endif
 					</div>
 				</div>
 			</div>

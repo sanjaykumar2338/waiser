@@ -59,7 +59,7 @@
                         <td>{{$coupon->Id}}</td>
                         <td>{{$coupon->CodigoCupon}}</td>
                         <td>{{$coupon->NombreCupon}}</td>
-                        <td>{{date('Y-m-d',strtotime($coupon->FechaCaducidad))}}</td>
+                        <td>{{$coupon->FechaCaducidad}}</td>
                         <td>{{$coupon->Tipo}}</td>
                         <td>{{($coupon->Tipo=='Fixed'?'$'.number_format($coupon->Cantidad, 2) : ' '.number_format($coupon->Cantidad,2))}}</td>
                         <td>{{$coupon->Acumulable==1?'Yes':'No'}}</td>

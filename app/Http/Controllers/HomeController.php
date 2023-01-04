@@ -39,7 +39,37 @@ class HomeController extends Controller
     }
 
     public function checkout(Request $request){
-        return view('pages.checkout');
+        //Session::flush();
+        //Session::forget('cart'); die;
+        $total = 0.00;
+        $cart = session()->get('cart', []);
+        if($cart){
+            foreach($cart as $row){
+                $total += $row['product_price'] + $row['insurance_price'];
+            }
+        }
+
+        $coupons = session()->get('coupons',[]);
+        //echo "<pre>"; print_r($coupons); die;
+        //echo $total;  die;
+        $coupon_discount = 0.00;
+        if($coupons && $total){
+            foreach($coupons as $coupon){
+                if($coupon['coupon_type']=='Percentage'){
+                    //echo $coupon['coupon_amount']; die;
+                    //echo ($coupon['coupon_amount'] / $total) * 100; die;
+                    $percent = ($coupon['coupon_amount'] / $total) * 100;
+                    $coupon_discount += round((float)$percent * 100 );
+                }
+
+                if($coupon['coupon_type']=='Fixed'){
+                    $coupon_discount += $coupon['coupon_amount'];
+                }
+            }
+        }
+
+        //echo $coupon_discount; die;
+        return view('pages.checkout')->with('coupon_discount',$coupon_discount);
     }
 
     public function product(Request $request){
@@ -70,7 +100,8 @@ class HomeController extends Controller
         
         if(!$member_id){
             //dd(session()->all());
-            Session::flash('message', 'por favor inicie sesión primero.');
+
+            Session::put('cart_message', 'por favor inicie sesión primero.');
             return redirect('/login');
         }
 
@@ -94,7 +125,7 @@ class HomeController extends Controller
         //echo Session::get('membresia');
         Session::forget('user_id');
         Session::forget('membresia');
-        Session::flash('message', 'Cerrar sesión con éxito');
+        Session::put('cart_message', 'Cerrar sesión con éxito');
         return redirect('/home');
     }
 
@@ -142,15 +173,15 @@ class HomeController extends Controller
                     Mail::to($email)->send(new PasswordRecovery($body));
                 }
 
-                Session::flash('message', 'Correo de recuperación enviado con éxito.');
+                Session::put('cart_message', 'Correo de recuperación enviado con éxito.');
                 return redirect('/home');
             }else{
-                Session::flash('message', 'Ningún record fue encontrado.');
+                Session::put('cart_message', 'Ningún record fue encontrado.');
                 return Redirect::back();
             }
 
         }catch(\Exceptions $e){
-            Session::flash('message', $e->getMessage());
+            Session::put('cart_message', $e->getMessage());
             return Redirect::back();
         }    
     }
@@ -173,10 +204,10 @@ class HomeController extends Controller
                 ];
          
                 Mail::to($email)->send(new PasswordRecovery($body));
-                Session::flash('message', 'Correo de recuperación enviado con éxito.');
+                Session::put('cart_message', 'Correo de recuperación enviado con éxito.');
                 return redirect('/home');
             }else{
-                Session::flash('message', 'Ningún record fue encontrado.');
+                Session::put('cart_message', 'Ningún record fue encontrado.');
                 return Redirect::back();
             }
 

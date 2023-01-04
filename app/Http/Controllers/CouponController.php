@@ -29,8 +29,8 @@ class CouponController extends Controller
 		//echo "<pre>"; print_r($request->all()); die();
 		//$now = \DateTime::createFromFormat('U.u', microtime(true));
 		//$date = $now->format("Y-m-d H:i:s.u");
-
-		$date = "'".date('Y-m-d')."'";
+		$date = date('Y-m-d',strtotime($request->expire_date));
+		$date = "'".$date."'";
 		//echo $date; die;
 		try{
 			$sql = "INSERT INTO dbo.CDICupones (CodigoCupon,NombreCupon,FechaCaducidad,Tipo,Cantidad,Acumulable) VALUES ('$request->coupon_code','$request->coupon_name',$date,'$request->type','$request->discount_amount','$request->user_with')";
@@ -119,6 +119,7 @@ class CouponController extends Controller
 
 		//echo "<pre>"; print_r($request->all()); die();
 		$date = date('Y-m-d',strtotime($request->expire_date));
+		$date = "'".$date."'";
 		//echo $date; die;
 		try{
 			$sql = "UPDATE dbo.CDICupones SET CodigoCupon='$request->coupon_code',NombreCupon='$request->coupon_name',FechaCaducidad=$date,Tipo='$request->type',Cantidad='$request->discount_amount',Acumulable='$request->user_with' WHERE Id = $request->id";
@@ -145,19 +146,40 @@ class CouponController extends Controller
 	public function applyCoupon(Request $request){
 		$sql = "SELECT * FROM dbo.CDICupones WHERE CodigoCupon='".$request->coupon."'";
 		$coupon = DB::connection('sqlsrv')->select(DB::raw($sql));
-
+		//echo "<pre>"; print_r($coupon); die;
+		//session()->forget('cart'); die;
 		if(!$coupon){
 			$response = array(
-	          'status' => 'success',
+	          'status' => 'error',
 	          'msg' => 'Cupón no válido'
 	      	);
 	      	return response()->json($response);
 		}
 
-      	$cart = session()->get('cart', []);
-      	if(isset($cart[$coupon[0]->Id])){
+		$expire = strtotime($coupon[0]->FechaCaducidad);
+		$today = time();
+
+		if($today >= $expire){
+			$response = array(
+	          'status' => 'error',
+	          'msg' => 'Cupón caducado'
+	      	);
+	      	return response()->json($response);
+		}
+
+		$cart = session()->get('cart', []);
+		if($cart && $coupon[0]->Acumulable==0){
+			$response = array(
+	          'status' => 'error',
+	          'msg' => 'Este cupón no se puede utilizar con otro cupón'
+	      	);
+	      	return response()->json($response);
+		}
+
+      	$coupons = session()->get('coupons', []);
+      	if(isset($coupons[$coupon[0]->Id])){
       		$response = array(
-	          'status' => 'success',
+	          'status' => 'error',
 	          'msg' => 'Cupón ya aplicado'
 	      	);
 
@@ -165,20 +187,19 @@ class CouponController extends Controller
       	}
 		
 
-		$cart[$coupon[0]->Id] = [
+		$coupons[$coupon[0]->Id] = [
                 "coupon_id" => $coupon[0]->Id,
                 "coupon_name" => $coupon[0]->NombreCupon,
                 "coupon_type" => $coupon[0]->Tipo,
-                "coupon_amount" => $request->Cantidad,
-                "coupon_expiry_date" => $request->FechaCaducidad
+                "coupon_amount" => $coupon[0]->Cantidad,
+                "coupon_expiry_date" => $coupon[0]->FechaCaducidad
             ];
 
         //echo "<pre>"; print_r($cart); die;
-        session()->put('cart', $cart);
-
+        session()->put('coupons', $coupons);
         $response = array(
 	          'status' => 'success',
-	          'msg' => 'Cupón no válido'
+	          'msg' => 'Cupón aplicado con éxito'
       	);
 
       	return response()->json($response);

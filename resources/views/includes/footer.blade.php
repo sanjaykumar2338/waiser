@@ -28,6 +28,9 @@
 				@if($cart)
 					@foreach($cart as $key=>$row)
 					  @php
+					  	if($key==42 OR $key==43){
+					  		continue;
+					  	}
 					  	//echo "<pre>"; print_r($row); die;
 					  	$total += $row['product_price'];
 					  @endphp

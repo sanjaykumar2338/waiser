@@ -41,8 +41,8 @@
                     <input type="text" class="form-control" value="{{$coupon->CodigoCupon}}" id="" required name="coupon_code" aria-describedby="couponCodeHelp" placeholder="Enter Coupon Code">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Expiration Date</label>{{$coupon->FechaCaducidad}}
-                    <input type="date" class="form-control" value="{{date('Y-M-D',strtotime($coupon->FechaCaducidad))}}" id="" required name="expire_date" aria-describedby="couponCodeHelp">
+                    <label for="exampleInputEmail1">Expiration Date</label>
+                    <input type="date" class="form-control" id="" required name="expire_date" aria-describedby="couponCodeHelp" value="<?php echo date('Y-m-d',strtotime($coupon->FechaCaducidad)) ?>">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Type</label>
