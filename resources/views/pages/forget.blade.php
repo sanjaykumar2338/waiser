@@ -42,7 +42,7 @@
 				</div>
 				<div class="col-md-12">
 					<div class="frg-btn">
-						<button class="enviar-btn">regresar</button>
+						<button onclick='location.href = "{{url('login')}}";' class="enviar-btn">regresar</button>
 					</div>
 				</div>
 			</div>

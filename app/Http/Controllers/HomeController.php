@@ -125,7 +125,7 @@ class HomeController extends Controller
         //echo Session::get('membresia');
         Session::forget('user_id');
         Session::forget('membresia');
-        Session::put('cart_message', 'Cerrar sesión con éxito');
+        Session::put('cart_message', 'Sesión cerrada con éxito');
         return redirect('/home');
     }
 
@@ -247,7 +247,7 @@ class HomeController extends Controller
 
                     //echo "<pre>"; print_r($rec); die;
                     //dd(session()->all());
-                    $message = 'Inicie sesión con éxito.';
+                    $message = 'Inicio de sesión exitoso.';
                     Session::put('cart_message', $message);
                     return redirect('/my_account');
                 }else{
