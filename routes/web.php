@@ -47,6 +47,7 @@ Route::get('/course_selection/{id}', [UserController::class, 'course_selection']
 Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserController::class, 'course_selection_part']);
 Route::post('submit_payment', [UserController::class, 'submit_payment']);
 
+Route::get('/coupon/remove/{id}', [CouponController::class, 'coupon_remove']);
 Route::get('/coupon/index/{secret}', [CouponController::class, 'index']);
 Route::get('/coupon/add_coupon', [CouponController::class, 'add_coupon']);
 Route::get('/coupon/edit/{id}', [CouponController::class, 'edit_coupon']);

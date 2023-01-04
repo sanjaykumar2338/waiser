@@ -145,20 +145,27 @@
 					</div>
 				</div>
 
-				@if(false)
-				<div class="col-md-5">
-					Coupon:
-					<div class="subtotal">
-						<table>
-							<tr>
-								<td>Coupn</td>
-								<td><strong>${{number_format($total, 2)}}</strong></td>
-							</tr>
-						</table>
-					</div>
+				@if($coupon_discount)
+					@php 
+						$coupons = session()->get('coupons',[]); 
+					@endphp
+					<div class="col-md-5">
+						Coupon:
+						<div class="subtotal">
+							<table>
+								@if($coupons)
+									@foreach($coupons as $coupon)
+										<tr>
+											<td>{{$coupon['coupon_name']}}</td>
+											<td><a class="prd-dlt" style="cursor: pointer;" href="{{url('/coupon/remove')}}/{{$coupon['coupon_id']}}"><img src="{{asset('public/assests/images/delete.svg')}}"></a></td>
+										</tr>
+									@endforeach
+								@endif
+							</table>
+						</div>
 
-					<br/><br/>
-				</div>
+						<br/><br/>
+					</div>
 				@endif
 			</div>
 		</div>

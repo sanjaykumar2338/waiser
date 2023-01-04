@@ -204,4 +204,18 @@ class CouponController extends Controller
 
       	return response()->json($response);
 	}
+
+	public function coupon_remove(Request $request){
+		if($request->id) {
+            $coupons = session()->get('coupons');
+            if(isset($coupons[$request->id])) {
+                unset($coupons[$request->id]);
+                session()->put('coupons', $coupons);
+            }
+        }
+
+        Session::put('cart_message', 'Cupón eliminado con éxito');
+        //Session::flash('message', 'Curso eliminado con éxito');
+        return Redirect::back();
+	}
 }
