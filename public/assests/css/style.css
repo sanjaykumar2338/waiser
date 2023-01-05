@@ -1580,7 +1580,7 @@ span.prd-tm {
 
 .intergrante-box {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .intergrante-img {
@@ -1609,6 +1609,7 @@ span.prd-tm {
     margin: 5px 0 0 !important;
     padding: 4px 40px;
 }
+
 /* End Intergrates page */
 
 /* Collection page */
