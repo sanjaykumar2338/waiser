@@ -385,7 +385,8 @@ class UserController extends Controller
                 'inusrance_two_price' => $inusrance_two_price,
                 'inusrance_two_description' => $inusrance_two_description,
                 'inusrance_one_price' => $inusrance_one_price,
-                'inusrance_one_description' => $inusrance_one_description
+                'inusrance_one_description' => $inusrance_one_description,
+                'product_full_information' => $request->data
             ];
 
             //echo "<pre>"; print_r($cart); die;
@@ -485,7 +486,8 @@ class UserController extends Controller
                 'inusrance_two_price' => $inusrance_two_price,
                 'inusrance_two_description' => $inusrance_two_description,
                 'inusrance_one_price' => $inusrance_one_price,
-                'inusrance_one_description' => $inusrance_one_description
+                'inusrance_one_description' => $inusrance_one_description,
+                'product_full_information' => $request->data
             ];
 
             session()->put('cart', $cart);
@@ -533,6 +535,127 @@ class UserController extends Controller
     }
 
     public function submit_payment(Request $request){
-        echo "<pre>"; print_r($request->all());
+        //echo "<pre>"; print_r($request->all());
+
+        $total = 0.00;
+        $cart = session()->get('cart', []);
+        if($cart){
+            foreach($cart as $row){
+                $total += $row['product_price'] + $row['insurance_price'];
+            }
+        }
+
+        $coupons = session()->get('coupons',[]);
+        //echo "<pre>"; print_r($coupons); die;
+        //echo $total;  die;
+        $coupon_discount = 0.00;
+        if($coupons && $total){
+            foreach($coupons as $coupon){
+                if($coupon['coupon_type']=='Percentage'){
+                    //echo $coupon['coupon_amount']; die;
+                    //echo ($coupon['coupon_amount'] / $total) * 100; die;
+                    $percent = ($coupon['coupon_amount'] / $total) * 100;
+                    $coupon_discount += round((float)$percent * 100 );
+                }
+
+                if($coupon['coupon_type']=='Fixed'){
+                    $coupon_discount += $coupon['coupon_amount'];
+                }
+            }
+        }
+
+        $total = $total - $coupon_discount;
+
+        if($request->payment_type=='pay_later'){
+            $cart = session()->get('cart', []);
+            if($cart){
+                foreach($cart as $row){
+                    $product_info = (array) unserialize(urldecode($row['product_full_information']));
+                    //echo "<pre>"; print_r($product_info); die;
+
+                    $Estacion = Session::get('user_id');
+                    $Modulo = $request->payment_type=='pay_later' ? 'CECDI':'CE';
+                    $IdTransaccionWeb = $row['member_id'].date('d/m/y').time().uniqid();
+                    $CDISocio = $row['member_id'];
+                    $Id = $product_info['CEPlan'];
+                    $Movimiento = $product_info['Grupo'];
+                    $Concepto = $product_info['Programa'];
+                    $Monto = $product_info['Precio'];
+                    $UnidadCantidad = 1;
+                    $FechaEmision = date('d/m/y h:i');
+                    $Nombre = $row['member_name'];
+                    $CDIWImagen = NULL;
+                    $CDIDistribuible = NULL;
+                    $CDIExclusivoMem = NULL;
+                    $ReferenciaTransaccion = uniqid();
+                    $FechaTransaccion = date('Y-m-d h:i').':000';
+                    $CantidadComprada = 1;
+                    $ImporteTransaccion = $total;
+                    $ImporteDetalle = $product_info['Precio'];
+                    $Estatus = 'Ordenado';
+                    $RespuestaBanco = NULL;
+                    $MovGeneradoV = NULL;
+                    $IdMovGeneradoV = NULL;
+                    $MovGeneradoCxc = NULL;
+                    $IdMovGeneradoCxc = NULL;
+                    $A = $product_info['DesctoPorcentaje'];
+                    $B = substr($row['member_id'], 0, 5);
+                    $C = $product_info['descto1'];
+                    $D = $product_info['descto2'];
+                    $E = $product_info['descto3'];
+                    $F = $product_info['descto4'];
+                    $G = $product_info['Precio'];
+                    $H = $total;
+                    $I = $product_info['Paquete'];
+                    $J = NULL;
+                    $K = NULL;
+                    $L = NULL;
+                    $M = NULL;
+                    $N = NULL;
+                    $O = $this->get_client_ip();
+
+                    $Token = '#$%&/(2019)CDI201908010e63e6383fb838ea568a4c31da1bbc2bCDI#$%&';
+                    $IdTran = '1703700202211141820320000000000000000124';
+                    //echo "<pre>"; print_r(unserialize(urldecode($row['product_full_information'])));
+
+                    $payment_param = '';
+                    $payment_param = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+                    $payment_param .= "<CDIWTemp><row Estacion='$Estacion' Modulo='$Modulo' IdTransaccionWeb='$IdTran' Id='$Id ' Movimiento='$Movimiento' Concepto='$Concepto ' Importe='$Monto' UnidadCantidad='$UnidadCantidad' FechaEmision='$FechaEmision' CDISocio='$CDISocio' Nombre='$Nombre' CDIWImagen='$CDIWImagen' CDIDistribuible='$CDIDistribuible' CDIExclusivoMem='$CDIExclusivoMem' ReferenciaTransaccion='$ReferenciaTransaccion' FechaTransaccion='$FechaEmision' CantidadComprada='$CantidadComprada' ImporteTransaccion='$ImporteTransaccion' ImporteDetalle='$ImporteDetalle' Estatus='$Estatus' RespuestaBanco='$RespuestaBanco' MovGeneradoV='$MovGeneradoV' IdMovGeneradoV='$IdMovGeneradoV' MovGeneradoCxC='$MovGeneradoCxc' IdMovGeneradoCxC='$IdMovGeneradoCxc' A='$A' B='$B' C='$C' D='$D' E='$E' F='$F' G='$G' H='$H' I='$I' J='$J' K='$K' L='$L' M='$M' N='$N' O='$O'/></CDIWTemp>";
+                    //echo $payment_param; die;
+                    try{
+
+                        $rec = DB::connection('sqlsrv')->update(DB::raw("SET NOCOUNT ON; EXEC spRecibirCobrosWeb :Token,:Estacion,:IdTran,:xml"),[
+                            ':Token' => $Token,
+                            ':Estacion' => $Estacion,
+                            ':IdTran' => $IdTran,
+                            ':xml' => $payment_param
+                        ]);
+
+                    }catch(\Exceptions $e){
+                        print_r($e->getMessage());
+                        die;
+                    }
+                }
+            }
+        }
+    }
+
+    public function get_client_ip() {
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
     }
 }

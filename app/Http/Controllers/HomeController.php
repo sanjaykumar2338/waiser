@@ -23,18 +23,6 @@ class HomeController extends Controller
     }
 
     public function home(Request $request){
-        /*
-        $sql = "SELECT * FROM dbo.Ban1";
-        $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiLoginSocios :Socio, :contrasena"),[
-            ':Socio' => '2413500',
-            ':contrasena' => 'STJurSZk',
-        ]);
-        echo "<pre>"; print_r($rec); die;
-        */
-
-        
-        //echo "<pre>"; print_r($rec); die;
-        //return view('pages.home');
         return Redirect::to("/login");
     }
 
