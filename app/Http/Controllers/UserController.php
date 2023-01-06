@@ -622,6 +622,7 @@ class UserController extends Controller
                     $payment_param = '<?xml version="1.0" encoding="ISO-8859-1"?>';
                     $payment_param .= "<CDIWTemp><row Estacion='$Estacion' Modulo='$Modulo' IdTransaccionWeb='$IdTran' Id='$Id ' Movimiento='$Movimiento' Concepto='$Concepto ' Importe='$Monto' UnidadCantidad='$UnidadCantidad' FechaEmision='$FechaEmision' CDISocio='$CDISocio' Nombre='$Nombre' CDIWImagen='$CDIWImagen' CDIDistribuible='$CDIDistribuible' CDIExclusivoMem='$CDIExclusivoMem' ReferenciaTransaccion='$ReferenciaTransaccion' FechaTransaccion='$FechaEmision' CantidadComprada='$CantidadComprada' ImporteTransaccion='$ImporteTransaccion' ImporteDetalle='$ImporteDetalle' Estatus='$Estatus' RespuestaBanco='$RespuestaBanco' MovGeneradoV='$MovGeneradoV' IdMovGeneradoV='$IdMovGeneradoV' MovGeneradoCxC='$MovGeneradoCxc' IdMovGeneradoCxC='$IdMovGeneradoCxc' A='$A' B='$B' C='$C' D='$D' E='$E' F='$F' G='$G' H='$H' I='$I' J='$J' K='$K' L='$L' M='$M' N='$N' O='$O'/></CDIWTemp>";
                     //echo $payment_param; die;
+                    
                     try{
 
                         $rec = DB::connection('sqlsrv')->update(DB::raw("SET NOCOUNT ON; EXEC spRecibirCobrosWeb :Token,:Estacion,:IdTran,:xml"),[
