@@ -632,6 +632,7 @@ class UserController extends Controller
                             ':xml' => $payment_param
                         ]);
 
+                        echo "payment successfully";
                     }catch(\Exceptions $e){
                         print_r($e->getMessage());
                         die;
