@@ -24,7 +24,7 @@ class UserController extends Controller
         
         if(!$member_id){
             //dd(session()->all());
-            Session::put('cart_message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'Por favor inicie sesión de nuevo.');
             return redirect('/login');
         }
     }
@@ -536,7 +536,6 @@ class UserController extends Controller
 
     public function submit_payment(Request $request){
         //echo "<pre>"; print_r($request->all());
-
         $total = 0.00;
         $cart = session()->get('cart', []);
         if($cart){
@@ -632,14 +631,24 @@ class UserController extends Controller
                             ':xml' => $payment_param
                         ]);
 
-                        echo "payment successfully";
+                        $message = "Order placed successfully!";
                     }catch(\Exceptions $e){
-                        print_r($e->getMessage());
-                        die;
+                        $message = $e->getMessage();
                     }
                 }
             }
-        }
+
+            Session::put('cart_message', $message);
+            return redirect('/checkout');
+        }   
+
+        if($request->payment_type=='pay_online'){
+            return view('pages.checkout_payment');
+        }        
+    }
+
+    public function online_payment(Request $request){
+        echo "<pre>"; print_r($request->all()); die;
     }
 
     public function get_client_ip() {

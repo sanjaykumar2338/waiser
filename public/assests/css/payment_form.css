@@ -1,0 +1,355 @@
+.payment_form .mainclass {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    font-family: 'Raleway';
+}
+
+.payment_form .payment-title {
+    width: 100%;
+    text-align: center;
+}
+
+.payment_form .form-container .field-container:first-of-type {
+    grid-area: name;
+}
+
+.payment_form .form-container .field-container:nth-of-type(2) {
+    grid-area: number;
+}
+
+.payment_form .form-container .field-container:nth-of-type(3) {
+    grid-area: expiration;
+}
+
+.payment_form .form-container .field-container:nth-of-type(4) {
+    grid-area: security;
+}
+
+.payment_form .field-container input {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.payment_form .field-container {
+    position: relative;
+}
+
+.payment_form .form-container {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: auto auto;
+    grid-template-rows: 90px 90px 90px;
+    grid-template-areas: "name name""number number""expiration security";
+    max-width: 400px;
+    padding: 20px;
+    color: #707070;
+}
+
+.payment_form label {
+    padding-bottom: 5px;
+    font-size: 13px;
+}
+
+.payment_form input {
+    margin-top: 3px;
+    padding: 15px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #dcdcdc;
+}
+
+.payment_form .ccicon {
+    height: 38px;
+    position: absolute;
+    right: 6px;
+    top: calc(50% - 17px);
+    width: 60px;
+}
+
+/* CREDIT CARD IMAGE STYLING */
+.payment_form .preload * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+.payment_form .container {
+    width: 100%;
+    max-width: 400px;
+    max-height: 251px;
+    height: 54vw;
+    padding: 20px;
+}
+
+.payment_form #ccsingle {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+
+.payment_form #ccsingle svg {
+    width: 100px;
+    max-height: 60px;
+}
+
+.payment_form .creditcard svg#cardfront,
+.payment_form .creditcard svg#cardback {
+    width: 100%;
+    -webkit-box-shadow: 1px 5px 6px 0px black;
+    box-shadow: 1px 5px 6px 0px black;
+    border-radius: 22px;
+}
+
+.payment_form #generatecard{
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    color: #fff;
+    padding: 2px 4px;
+    background-color: #909090;
+    border-radius: 4px;
+    cursor: pointer;
+    float:right;
+}
+
+/* CHANGEABLE CARD ELEMENTS */
+.payment_form .creditcard .lightcolor,
+.payment_form .creditcard .darkcolor {
+    -webkit-transition: fill .5s;
+    transition: fill .5s;
+}
+
+.payment_form .creditcard .lightblue {
+    fill: #03A9F4;
+}
+
+.payment_form .creditcard .lightbluedark {
+    fill: #0288D1;
+}
+
+.payment_form .creditcard .red {
+    fill: #ef5350;
+}
+
+.payment_form .creditcard .reddark {
+    fill: #d32f2f;
+}
+
+.payment_form .creditcard .purple {
+    fill: #ab47bc;
+}
+
+.payment_form .creditcard .purpledark {
+    fill: #7b1fa2;
+}
+
+.payment_form .creditcard .cyan {
+    fill: #26c6da;
+}
+
+.payment_form .creditcard .cyandark {
+    fill: #0097a7;
+}
+
+.payment_form .creditcard .green {
+    fill: #66bb6a;
+}
+
+.payment_form .creditcard .greendark {
+    fill: #388e3c;
+}
+
+.payment_form .creditcard .lime {
+    fill: #d4e157;
+}
+
+.payment_form .creditcard .limedark {
+    fill: #afb42b;
+}
+
+.payment_form .creditcard .yellow {
+    fill: #ffeb3b;
+}
+
+.payment_form .creditcard .yellowdark {
+    fill: #f9a825;
+}
+
+.payment_form .creditcard .orange {
+    fill: #ff9800;
+}
+
+.payment_form .creditcard .orangedark {
+    fill: #ef6c00;
+}
+
+.payment_form .creditcard .grey {
+    fill: #bdbdbd;
+}
+
+.payment_form .creditcard .greydark {
+    fill: #616161;
+}
+
+/* FRONT OF CARD */
+.payment_form #svgname {
+    text-transform: uppercase;
+}
+
+.payment_form #cardfront .st2 {
+    fill: #FFFFFF;
+}
+
+.payment_form #cardfront .st3 {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 600;
+}
+
+.payment_form #cardfront .st4 {
+    font-size: 54.7817px;
+}
+
+.payment_form #cardfront .st5 {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 400;
+}
+
+.payment_form #cardfront .st6 {
+    font-size: 33.1112px;
+}
+
+.payment_form #cardfront .st7 {
+    opacity: 0.6;
+    fill: #FFFFFF;
+}
+
+.payment_form #cardfront .st8 {
+    font-size: 24px;
+}
+
+.payment_form #cardfront .st9 {
+    font-size: 36.5498px;
+}
+
+.payment_form #cardfront .st10 {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 300;
+}
+
+.payment_form #cardfront .st11 {
+    font-size: 16.1716px;
+}
+
+.payment_form #cardfront .st12 {
+    fill: #4C4C4C;
+}
+
+/* BACK OF CARD */
+.payment_form #cardback .st0 {
+    fill: none;
+    stroke: #0F0F0F;
+    stroke-miterlimit: 10;
+}
+
+.payment_form #cardback .st2 {
+    fill: #111111;
+}
+
+.payment_form #cardback .st3 {
+    fill: #F2F2F2;
+}
+
+.payment_form #cardback .st4 {
+    fill: #D8D2DB;
+}
+
+.payment_form #cardback .st5 {
+    fill: #C4C4C4;
+}
+
+.payment_form #cardback .st6 {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 400;
+}
+
+.payment_form #cardback .st7 {
+    font-size: 27px;
+}
+
+.payment_form #cardback .st8 {
+    opacity: 0.6;
+}
+
+.payment_form #cardback .st9 {
+    fill: #FFFFFF;
+}
+
+.payment_form #cardback .st10 {
+    font-size: 24px;
+}
+
+.payment_form #cardback .st11 {
+    fill: #EAEAEA;
+}
+
+.payment_form #cardback .st12 {
+    font-family: 'Rock Salt', cursive;
+}
+
+.payment_form #cardback .st13 {
+    font-size: 37.769px;
+}
+
+/* FLIP ANIMATION */
+.payment_form .container {
+    perspective: 1000px;
+}
+
+.payment_form .creditcard {
+    width: 100%;
+    max-width: 400px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: -webkit-transform 0.6s;
+    -webkit-transition: -webkit-transform 0.6s;
+    transition: transform 0.6s;
+    transition: transform 0.6s, -webkit-transform 0.6s;
+    cursor: pointer;
+}
+
+.payment_form .creditcard .front,
+.payment_form .creditcard .back {
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    color: #47525d;
+}
+
+.payment_form .creditcard .back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.payment_form .creditcard.flipped {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}

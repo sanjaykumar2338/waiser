@@ -18,7 +18,7 @@
 					<p class="cr-hgh">PRECIO</p>
 				</div>
 			</div>
-			<div class="carrit-pp" style="max-height: 400px;overflow-y: auto;">
+			<div class="carrit-pp" style="max-height: 350px;overflow-y: auto;">
 
 				@php
 					$cart = session()->get('cart', []);
