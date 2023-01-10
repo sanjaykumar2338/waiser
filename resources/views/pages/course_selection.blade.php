@@ -23,7 +23,7 @@
 						<div class="socio-right">
 							<form>
 								<div class="from-srch">
-									<input type="text" placeholder="BUSCAR"/>
+									<input type="text" id="filter" placeholder="BUSCAR"/>
 									<button><img src="{{ asset('public/assests/images/Search_light.svg')}}"></button>
 								</div>
 							</form>
@@ -31,7 +31,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row filter_results">
 				@foreach($result as $key=>$row)
 
 					@php $image_name = ''; @endphp
@@ -44,7 +44,7 @@
 						@endif
 					@endforeach
 
-					<div class="col-md-3 col-6">
+					<div class="col-md-3 col-6 main_box">
 						<div class="socio-box">
 							<div class="socio-img">
 								
@@ -92,4 +92,29 @@
 			<img src="{{ asset('public/assests/images/img-6.jpg')}}"/>
 		</div>
 	</div>  
+
+	<script type="text/javascript">
+	$("#filter").keyup(function() {
+
+      // Retrieve the input field text and reset the count to zero
+      var filter = $(this).val(),
+        count = 0;
+
+      // Loop through the comment list
+      $('.filter_results .main_box').each(function() {
+
+
+        // If the list item does not contain the text phrase fade it out
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+          $(this).hide();  // MY CHANGE
+
+          // Show the list item if the phrase matches and increase the count by 1
+        } else {
+          $(this).show(); // MY CHANGE
+          count++;
+        }
+
+      });
+    });
+	</script>
 @stop

@@ -60,8 +60,17 @@ Route::post('/apply_coupon',[CouponController::class,'applyCoupon']);
 
 
 Route::get('send_test_email', function(){
+	
 	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
 	{
 		$message->to('sk963070@gmail.com');
 	});
+	
+	/*
+	$data = '';
+	Mail::raw('Sending emails with Mailgun and Laravel is easy!', $data, function($message){
+        $message->from('postmaster@cdimexico.org.mx', 'Mailgun Sandbox');
+        $message->to('sk963070@gmail.com')->subject('test');
+    });
+    */
 });
