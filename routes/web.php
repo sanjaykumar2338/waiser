@@ -46,7 +46,7 @@ Route::get('/remove_cart/{id}', [UserController::class, 'remove_cart']);
 Route::get('/course_selection/{id}', [UserController::class, 'course_selection']);
 Route::get('/course_selection_part/{socio_id}/{title}/{dias?}/{sede?}', [UserController::class, 'course_selection_part']);
 Route::post('submit_payment', [UserController::class, 'submit_payment']);
-Route::post('online_payment', [UserController::class, 'online_payment']);
+Route::get('online_payment', [UserController::class, 'online_payment']);
 
 Route::get('/coupon/remove/{id}', [CouponController::class, 'coupon_remove']);
 Route::get('/coupon/index/{secret}', [CouponController::class, 'index']);

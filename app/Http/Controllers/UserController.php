@@ -643,12 +643,67 @@ class UserController extends Controller
         }   
 
         if($request->payment_type=='pay_online'){
-            return view('pages.checkout_payment');
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://eu-test.oppwa.com/v1/checkouts",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "entityId=8ac7a4c986075b640186088248c502b0&amount=$total&currency=MXN&paymentType=DB",
+              CURLOPT_HTTPHEADER => array(
+                "authorization: Bearer OGFjN2E0Yzk4NjA3NWI2NDAxODYwODgxZDRmZTAyYWN8RmE3cGZxYlhhQw==",
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded"
+              ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+                //echo "cURL Error #:" . $err;
+                Session::put('cart_message', $err);
+                return redirect('/checkout');
+            } else {
+                $data = json_decode($response,true);
+                return view('pages.checkout_payment')->with('data',$data);
+            }
         }        
     }
 
     public function online_payment(Request $request){
-        echo "<pre>"; print_r($request->all()); die;
+        //echo "<pre>"; print_r($request->all()); die;
+        $data = $request->all();
+        if(isset($data['id']) && isset($data['resourcePath'])){
+            $url = "https://eu-test.oppwa.com/v1/checkouts/".$data['id']."/payment";
+                $url .= "?entityId=8ac7a4c986075b640186088248c502b0";
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                               'Authorization:Bearer OGFjN2E0Yzk4NjA3NWI2NDAxODYwODgxZDRmZTAyYWN8RmE3cGZxYlhhQw=='));
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $responseData = curl_exec($ch);
+                if(curl_errno($ch)) {
+                    return curl_error($ch);
+                }
+                curl_close($ch);
+                //print_r($responseData);
+                $data = json_decode($responseData,true);
+                Session::put('cart_message', $data['result']['description']);
+                return redirect('/checkout');
+        }
+
+        Session::put('cart_message','Something went wrong, try again');
+        return redirect('/checkout');
     }
 
     public function get_client_ip() {
