@@ -195,6 +195,42 @@
 				<div class="reserva-bx">
 					<h3>Reserva y paga en linea ahora</h3>
 					<p>Formas de pago.</p>
+
+					<div style="display:none">
+					<div class="row g-3">
+					  <div class="col-md-6">
+					    <label for="Name" class="form-label">Name</label>
+					    <input type="text" class="form-control billingdetails" id="name" name="name">
+					  </div>
+					  <div class="col-md-6">
+					    <label for="Email" class="form-label">Email</label>
+					    <input type="email" class="form-control billingdetails" id="email" name="name">
+					  </div>
+				    </div>
+
+				    <div class="row g-3">
+					  <div class="col-md-6">
+					    <label for="Street" class="form-label">Street</label>
+					    <input type="text" class="form-control billingdetails" id="street" name="street">
+					  </div>
+					  <div class="col-md-6">
+					    <label for="City" class="form-label">City</label>
+					    <input type="text" class="form-control billingdetails" id="city" name="city">
+					  </div>
+				    </div>
+
+				    <div class="row g-3">
+					  <div class="col-md-6">
+					    <label for="Country" class="form-label">Country</label>
+					    <input type="text" class="form-control billingdetails" id="country" name="country">
+					  </div>
+					  <div class="col-md-6">
+					    <label for="Postcode" class="form-label">Postcode</label>
+					    <input type="number" class="form-control billingdetails" id="postcode" name="postcode">
+					  </div>
+				    </div>
+			    	<br>
+			    	 </div>
 					<button class="payment_button" value="pay_online" type="submit">Reservar y pagar ahora en línea</button>
 				</div>
 			</div>
@@ -205,10 +241,17 @@
 	<script type="text/javascript">
 		$('.payment_button').on('click', function(){
 			$('#payment_type').val($(this).val());
+
+			if($('#payment_type').val()=="pay_online"){
+	        	//$('.billingdetails').prop('required',true);
+        	}else{
+        		//$('.billingdetails').prop('required',false);
+    		}
 		});
 
 		$("form").submit(function(e){
 	        e.preventDefault();
+
 	        setTimeout(function(){
 	        	$(this).unbind(e);
 	        	$('#payment_frm').submit();

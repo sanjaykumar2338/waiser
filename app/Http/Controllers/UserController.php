@@ -643,7 +643,7 @@ class UserController extends Controller
         }   
 
         if($request->payment_type=='pay_online'){
-
+            $transid = str_pad(mt_rand(1,99999999),8,'0',STR_PAD_LEFT);
             $curl = curl_init();
             curl_setopt_array($curl, array(
               CURLOPT_URL => "https://eu-test.oppwa.com/v1/checkouts",
@@ -653,7 +653,7 @@ class UserController extends Controller
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => "entityId=8ac7a4c986075b640186088248c502b0&amount=$total&currency=MXN&paymentType=DB",
+              CURLOPT_POSTFIELDS => "entityId=8ac7a4c986075b640186088248c502b0&amount=$total&currency=MXN&paymentType=DB&testMode=EXTERNAL&descriptor=8997184&merchantTransactionId=".$transid,
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer OGFjN2E0Yzk4NjA3NWI2NDAxODYwODgxZDRmZTAyYWN8RmE3cGZxYlhhQw==",
                 "cache-control: no-cache",
@@ -696,7 +696,7 @@ class UserController extends Controller
                     return curl_error($ch);
                 }
                 curl_close($ch);
-                //print_r($responseData);
+                print_r($responseData); die;
                 $data = json_decode($responseData,true);
                 Session::put('cart_message', $data['result']['description']);
                 return redirect('/checkout');
