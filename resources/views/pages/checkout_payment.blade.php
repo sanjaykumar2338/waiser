@@ -40,8 +40,15 @@
     <script type="text/javascript">
         //setTimeout(() => $('.wpwl-form:first').remove(),1000)
         var wpwlOptions = {
+            onBeforeSubmitCard: function(e){
+                return validateHolder(e);
+            },
             registrations: {requireCvv: false,hideInitialPaymentForms: false},           
             onReady: function() {
+                $('.wpwl-form-card').find('.wpwl-button-pay').on('click', function(e){
+                  validateHolder(e);
+                });
+
                 var numberOfInstallmentsHtml = '';
                 numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-billingCity wpwl-clearfix" style="width:45%;">
                       
@@ -50,7 +57,7 @@
                       </div>
                       <div class="wpwl-group wpwl-group-billingCountry wpwl-clearfix" style="width:48%;margin-left: 25px;">
                         <label for="Email" class="wpwl-label">Billing Country</label>
-                        <input type="email" required class="wpwl-control" id="billing.country" name="billing.country">
+                        <input type="text" required class="wpwl-control" id="billing.country" name="billing.country">
                       </div>
                     </div>`;
 
@@ -62,14 +69,14 @@
                       </div>
                       <div class="wpwl-group wpwl-group-billingCountry wpwl-clearfix" style="width:48%;margin-left: 25px;">
                         <label for="Email" required class="wpwl-label">Billing Postcode</label>
-                        <input type="email" class="wpwl-control" id="billing.postcode" name="billing.postcode">
+                        <input type="number" class="wpwl-control" id="billing.postcode" name="billing.postcode">
                       </div>
                     </div>`;
 
            numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-billingCity wpwl-clearfix" style="width:100%;">
                       
                         <label for="Name" class="wpwl-label">Customer Email</label>
-                        <input type="text" required class="wpwl-control" id="customer.email" name="customer.email">
+                        <input type="email" required class="wpwl-control" id="customer.email" name="customer.email">
                       </div>`; 
           
            
@@ -77,6 +84,16 @@
             $('form.wpwl-form-card').find('.wpwl-button').before(numberOfInstallmentsHtml);
             } 
         }
+
+        function validateHolder(e){
+          var holder = $('.wpwl-control-cardHolder').val();
+          if (holder.trim().length < 2){
+            $('.wpwl-control-cardHolder').addClass('wpwl-has-error').after('<div class="wpwl-hint wpwl-hint-cardHolderError">Invalid card holder</div>');
+            return false;
+          }
+          return true;
+        }
+
     </script>
     <script async src="https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId={{$data['id']}}"></script>
 @stop
