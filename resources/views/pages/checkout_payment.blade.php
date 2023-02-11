@@ -57,23 +57,26 @@
                       </div>
                       <div class="wpwl-group wpwl-group-billingCountry wpwl-clearfix" style="width:48%;margin-left: 25px;">
                         <label for="Email" class="wpwl-label">Billing Country</label>
-                        <input type="text" required class="wpwl-control" id="billing.country" name="billing.country">
+                        <select required class="wpwl-control" id="billing.country" name="billing.country">
+                            <option value="">Select Country</option>
+                            <option value="MX">Mexico</option>
+                        </select>
                       </div>
                     </div>`;
 
 
-            numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-billingCity wpwl-clearfix" style="width:45%;">
+            numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-billingStreet wpwl-clearfix" style="width:45%;">
                       
                         <label for="Name" class="wpwl-label">Billing Street</label>
                         <input type="text" required class="wpwl-control" id="billing.street1" name="billing.street1">
                       </div>
-                      <div class="wpwl-group wpwl-group-billingCountry wpwl-clearfix" style="width:48%;margin-left: 25px;">
+                      <div class="wpwl-group wpwl-group-billingPostcode wpwl-clearfix" style="width:48%;margin-left: 25px;">
                         <label for="Email" required class="wpwl-label">Billing Postcode</label>
                         <input type="number" class="wpwl-control" id="billing.postcode" name="billing.postcode">
                       </div>
                     </div>`;
 
-           numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-billingCity wpwl-clearfix" style="width:100%;">
+           numberOfInstallmentsHtml += `<div class="wpwl-group wpwl-group-CustomerEmail wpwl-clearfix" style="width:100%;">
                       
                         <label for="Name" class="wpwl-label">Customer Email</label>
                         <input type="email" required class="wpwl-control" id="customer.email" name="customer.email">

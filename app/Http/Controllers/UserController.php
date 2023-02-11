@@ -696,11 +696,122 @@ class UserController extends Controller
                     return curl_error($ch);
                 }
                 curl_close($ch);
-                print_r($responseData); die;
-                $data = json_decode($responseData,true);
-                Session::put('cart_message', $data['result']['description']);
+                //print_r($responseData); die;
+                $datatrans = json_decode($responseData,true);
+
+                if(@$datatrans['resultDetails']['ExtendedDescription']=='Transaction succeeded'){
+                    $total = 0.00;
+                    $cart = session()->get('cart', []);
+                    if($cart){
+                        foreach($cart as $row){
+                            $total += $row['product_price'] + $row['insurance_price'];
+                        }
+                    }
+
+                    $coupons = session()->get('coupons',[]);
+                    //echo "<pre>"; print_r($coupons); die;
+                    //echo $total;  die;
+                    $coupon_discount = 0.00;
+                    if($coupons && $total){
+                        foreach($coupons as $coupon){
+                            if($coupon['coupon_type']=='Percentage'){
+                                //echo $coupon['coupon_amount']; die;
+                                //echo ($coupon['coupon_amount'] / $total) * 100; die;
+                                $percent = ($coupon['coupon_amount'] / $total) * 100;
+                                $coupon_discount += round((float)$percent * 100 );
+                            }
+
+                            if($coupon['coupon_type']=='Fixed'){
+                                $coupon_discount += $coupon['coupon_amount'];
+                            }
+                        }
+                    }
+
+                    $total = $total - $coupon_discount;
+                    $cart = session()->get('cart', []);
+                    if($cart){
+                        foreach($cart as $row){
+                            $product_info = (array) unserialize(urldecode($row['product_full_information']));
+                            //echo "<pre>"; print_r($product_info); die;
+
+                            $Estacion = Session::get('user_id');
+                            $Modulo = 'CE';
+                            $IdTransaccionWeb = $row['member_id'].date('d/m/y').time().uniqid();
+                            $CDISocio = $row['member_id'];
+                            $Id = $product_info['CEPlan'];
+                            $Movimiento = $product_info['Grupo'];
+                            $Concepto = $product_info['Programa'];
+                            $Monto = $product_info['Precio'];
+                            $UnidadCantidad = 1;
+                            $FechaEmision = date('d/m/y h:i');
+                            $Nombre = $row['member_name'];
+                            $CDIWImagen = NULL;
+                            $CDIDistribuible = NULL;
+                            $CDIExclusivoMem = NULL;
+                            $ReferenciaTransaccion = uniqid();
+                            $FechaTransaccion = date('Y-m-d h:i').':000';
+                            $CantidadComprada = 1;
+                            $ImporteTransaccion = $total;
+                            $ImporteDetalle = $product_info['Precio'];
+                            $Estatus = 'Pagado';
+                            $RespuestaBanco = $datatrans['merchantTransactionId'];
+                            $MovGeneradoV = NULL;
+                            $IdMovGeneradoV = NULL;
+                            $MovGeneradoCxc = NULL;
+                            $IdMovGeneradoCxc = NULL;
+                            $A = $product_info['DesctoPorcentaje'];
+                            $B = substr($row['member_id'], 0, 5);
+                            $C = $product_info['descto1'];
+                            $D = $product_info['descto2'];
+                            $E = $product_info['descto3'];
+                            $F = $product_info['descto4'];
+                            $G = $product_info['Precio'];
+                            $H = $total;
+                            $I = $product_info['Paquete'];
+                            $J = NULL;
+                            $K = NULL;
+                            $L = NULL;
+                            $M = NULL;
+                            $N = $datatrans['paymentBrand'];
+                            $O = $datatrans['customer']['ip'];
+
+                            $Token = '#$%&/(2019)CDI201908010e63e6383fb838ea568a4c31da1bbc2bCDI#$%&';
+                            $IdTran = '1703700202211141820320000000000000000124';
+                            //echo "<pre>"; print_r(unserialize(urldecode($row['product_full_information'])));
+
+                            $payment_param = '';
+                            $payment_param = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+                            $payment_param .= "<CDIWTemp><row Estacion='$Estacion' Modulo='$Modulo' IdTransaccionWeb='$IdTran' Id='$Id ' Movimiento='$Movimiento' Concepto='$Concepto ' Importe='$Monto' UnidadCantidad='$UnidadCantidad' FechaEmision='$FechaEmision' CDISocio='$CDISocio' Nombre='$Nombre' CDIWImagen='$CDIWImagen' CDIDistribuible='$CDIDistribuible' CDIExclusivoMem='$CDIExclusivoMem' ReferenciaTransaccion='$ReferenciaTransaccion' FechaTransaccion='$FechaEmision' CantidadComprada='$CantidadComprada' ImporteTransaccion='$ImporteTransaccion' ImporteDetalle='$ImporteDetalle' Estatus='$Estatus' RespuestaBanco='$RespuestaBanco' MovGeneradoV='$MovGeneradoV' IdMovGeneradoV='$IdMovGeneradoV' MovGeneradoCxC='$MovGeneradoCxc' IdMovGeneradoCxC='$IdMovGeneradoCxc' A='$A' B='$B' C='$C' D='$D' E='$E' F='$F' G='$G' H='$H' I='$I' J='$J' K='$K' L='$L' M='$M' N='$N' O='$O'/></CDIWTemp>";
+                            //echo $payment_param; die;
+                            
+                            try{
+
+                                $rec = DB::connection('sqlsrv')->update(DB::raw("SET NOCOUNT ON; EXEC spRecibirCobrosWeb :Token,:Estacion,:IdTran,:xml"),[
+                                    ':Token' => $Token,
+                                    ':Estacion' => $Estacion,
+                                    ':IdTran' => $IdTran,
+                                    ':xml' => $payment_param
+                                ]);
+
+                                $message = "Order placed successfully!";
+                            }catch(\Exceptions $e){
+                                $message = 'Paymment done successfully there is some error storing in procedure. please contact '.$e->getMessage();
+                            }
+                        }
+
+                        Session::forget('cart');
+                        Session::put('cart_message',$message);
+                        return redirect('/checkout');
+                    }
+
+                    Session::forget('cart');
+                    Session::put('cart_message','Paymment done successfully there is some error storing in procedure. please contact');
+                    return redirect('/checkout');
+                }
+
+                Session::put('cart_message',@$datatrans['resultDetails']['description']);
                 return redirect('/checkout');
-        }
+            }
 
         Session::put('cart_message','Something went wrong, try again');
         return redirect('/checkout');
