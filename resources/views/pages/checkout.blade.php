@@ -150,7 +150,7 @@
 						$coupons = session()->get('coupons',[]); 
 					@endphp
 					<div class="col-md-5">
-						Coupon:
+						Cupón:
 						<div class="subtotal">
 							<table>
 								@if($coupons)
@@ -194,7 +194,7 @@
 				</div>
 				<div class="reserva-bx">
 					<h3>Reserva y paga en linea ahora</h3>
-					<p>Formas de pago.</p>
+					<p>Pago con tarjeta Visa ó Mastercard.</p>
 
 					<div style="display:none">
 					<div class="row g-3">

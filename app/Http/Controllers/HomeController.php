@@ -89,7 +89,7 @@ class HomeController extends Controller
         if(!$member_id){
             //dd(session()->all());
 
-            Session::put('cart_message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'Por favor inicia sesión para continuar.');
             return redirect('/login');
         }
 
@@ -247,6 +247,45 @@ class HomeController extends Controller
                 $message = 'Usuario o contraseña incorrectos';
                 Session::put('cart_message', $message);
                 return redirect('/login');
+            }
+        }catch(\Exceptions $e){
+            Session::put('cart_message', $e->getMessage());
+            return Redirect::back();
+        }            
+    }
+
+    public function login_professor(Request $request){
+        //echo Session::get('membresia');
+        $members = '';
+        return view('professor.login')->with('members','');
+    }
+
+    public function login_professor_submit(Request $request){
+        //echo "<pre>"; print_r($request->all()); die;
+        try{
+            //$sql = "SELECT * FROM dbo.Ban1";
+            $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpLoginProf :Email, :contrasena,:contrasena2,:accion"),[
+                ':Email' => $request->email,
+                ':contrasena' => $request->password,
+                ':contrasena2' => NULL,
+                'accion' => '1'
+            ]);
+
+            //$sql = "Select * from dbo.Profesor where Email='".$request->email."'";
+            ///echo $sql;
+            //$member_info = DB::select(DB::raw($sql));
+            //echo "<pre>"; print_r($member_info); die; 
+            //echo "<pre>"; print_r($rec); die; 
+
+            if($rec && $rec[0]->Estatus==1){
+                Session::put('professor_email', $request->email);
+                Session::put('professor_id', $request->password);
+                Session::put('professor_login', true);
+                return redirect('/profesores/group');
+            }else{
+                $message = 'Usuario o contraseña incorrectos';
+                Session::put('cart_message', $message);
+                return Redirect::back();
             }
         }catch(\Exceptions $e){
             Session::put('cart_message', $e->getMessage());

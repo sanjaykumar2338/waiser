@@ -37,7 +37,7 @@ class UserController extends Controller
     public function my_account(Request $request){
         $member_id = Session::get('user_id');
         if(!$member_id){
-            Session::put('cart_message', 'por favor inicie sesión primero.');
+            Session::put('cart_message', 'Por favor inicia sesión para continuar');
             return Redirect::back();
         }
 
@@ -631,7 +631,7 @@ class UserController extends Controller
                             ':xml' => $payment_param
                         ]);
 
-                        $message = "Order placed successfully!";
+                        $message = "¡Pedido realizado con éxito!";
                     }catch(\Exceptions $e){
                         $message = $e->getMessage();
                     }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProfessorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,12 @@ use App\Http\Controllers\CouponController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//coaches routes
+Route::get('/profesores', [HomeController::class, 'login_professor']);
+Route::post('/login_professor_submit', [HomeController::class, 'login_professor_submit']);
+Route::get('/profesores/group', [ProfessorController::class, 'group']);
+Route::get('/profesores/team/{id}', [ProfessorController::class, 'group_team']);
 
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/home', [HomeController::class, 'home']);
