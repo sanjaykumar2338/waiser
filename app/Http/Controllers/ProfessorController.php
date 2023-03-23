@@ -27,13 +27,6 @@ class ProfessorController extends Controller
 
     public function group(Request $request)
     {
-        //echo Session::get('professor_email');
-        //$sql = "Select * from dbo.Profesor where Email='".Session::get('professor_email')."'";
-        ///echo $sql;
-        //$member_info = DB::select(DB::raw($sql));
-        //echo "<pre>"; print_r($member_info); //die; 
-        //echo "<pre>"; print_r($rec); die;
-
         $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpcdiRecPlanProf :profesor"),[
                 ':profesor' => Session::get('professor_id')
         ]);
@@ -42,12 +35,45 @@ class ProfessorController extends Controller
        	return view('professor.group')->with('group', $rec);
     }
 
+    public function logout(Request $request){
+        Session::forget('professor_email');
+        Session::forget('professor_id');
+        Session::put('cart_message', 'Sesión cerrada con éxito');
+        return redirect('/profesores');
+    }
+
     public function group_team(Request $request){
         $rec = DB::connection('sqlsrv')->select(DB::raw("exec xpCDIProfSociosRepres :profesor"),[
                 ':profesor' => $request->id
         ]);
 
         //echo "<pre>"; print_r($rec); die;
-        return view('professor.team_members')->with('members', $rec);
+        return view('professor.team_members')->with('members', $rec)->with('paquete_no', $request->paquete_no);
+    }
+
+    public function change_status(Request $request){
+        //echo "<pre>"; print_r($request->all()); die;
+
+        try{  
+            /*          
+            $rec = DB::connection('sqlsrv')->query(DB::raw("exec xpCDIInscRepreProfEstatus :socio,:paqueteno,:estatus"),[
+                    ':socio' => $request->socio,
+                    ':paqueteno' => $request->paqueteno,
+                    ':estatus' => $request->action
+            ]);
+            */
+
+            $rec = DB::connection('sqlsrv')->update(DB::raw("SET NOCOUNT ON; EXEC xpCDIInscRepreProfEstatus :socio,:paqueteno,:estatus"),[
+                            ':socio' => $request->socio,
+                    ':paqueteno' => $request->paqueteno,
+                    ':estatus' => $request->action
+                        ]);
+
+            return response()->json(['status' => true, 'message' => 'el estado cambió con éxito']);
+        }catch(\Exceptions $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+
+        //echo "<pre>"; print_r($rec); die;
     }
 }

@@ -79,60 +79,44 @@
 								<h4>FILTRAR POR:</h4>
 								<div class="dias-bx">
 									<h5>DÍAS</h5>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Lunes" id="customCheck1" @php echo ($dias_param && in_array('Lunes',$dias_param)) ? 'checked':'' @endphp>
-											<span>Lunes</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Martes" id="customCheck2" @php echo ($dias_param && in_array('Martes',$dias_param)) ? 'checked':'' @endphp>
-											<span>Martes</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Miercoles" id="customCheck3" @php echo ($dias_param && in_array('Miercoles', $dias_param)) ? 'checked':'' @endphp>
-											<span>Miercoles</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Jueves" id="customCheck4" @php echo ($dias_param && in_array('Jueves', $dias_param)) ? 'checked':'' @endphp>
-											<span>Jueves</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Viernes" id="customCheck5" @php echo ($dias_param && in_array('Viernes', $dias_param)) ? 'checked':'' @endphp>
-											<span>Viernes</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Sabado" id="customCheck6" @php echo ($dias_param && in_array('Sabado',$dias_param)) ? 'checked':'' @endphp>
-											<span>Sabado</span>
-										</label>
-									</div><br>
-									<div class="custom-chk-btn">
-										<label>
-											<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Domingo" id="customCheck7" @php echo ($dias_param && in_array('Domingo', $dias_param)) ? 'checked':'' @endphp>
-											<span>Domingo</span>
-										</label>
-									</div><br>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Lunes" id="customCheck1" @php echo ($dias_param && in_array('Lunes',$dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck1">Lunes</label>
+									</div>
+									<div class="custom-control custom-checkbox">	
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Martes" id="customCheck2" @php echo ($dias_param && in_array('Martes',$dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck2">Martes</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Miercoles" id="customCheck3" @php echo ($dias_param && in_array('Miercoles', $dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck3">Miercoles</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Jueves" id="customCheck4" @php echo ($dias_param && in_array('Jueves', $dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck4">Jueves</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Viernes" id="customCheck5" @php echo ($dias_param && in_array('Viernes', $dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck5">Viernes</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Sabado" id="customCheck6" @php echo ($dias_param && in_array('Sabado',$dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck6">Sabado</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input dias_filter" name="dias[]" value="Domingo" id="customCheck7" @php echo ($dias_param && in_array('Domingo', $dias_param)) ? 'checked':'' @endphp>
+										<label class="custom-control-label" for="customCheck7">Domingo</label>
+									</div>
 								</div>
 
 								@if($sede)
 									<div class="dias-bx">
 										<h5>SEDE</h5>
 										@foreach($sede as $key=>$row)
-											<div class="custom-chk-btn">
-												<label>
-													<input type="checkbox" class="custom-control-input sede_filter" name="sede[]" value="{{$row}}" id="customCheck{{$key+8}}" @php echo (request()->get('sede') && in_array($row, request()->get('sede'))) ? 'checked':'' @endphp>
-													<span for="customCheck{{$key+8}}">{{$row}}</span>
-												</label>
-											</div><br>
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input sede_filter" name="sede[]" value="{{$row}}" id="customCheck{{$key+8}}" @php echo (request()->get('sede') && in_array($row, request()->get('sede'))) ? 'checked':'' @endphp>
+												<label class="custom-control-label" for="customCheck{{$key+8}}">{{$row}}</label>
+											</div>
 										@endforeach
 									</div>
 								@endif

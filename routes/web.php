@@ -21,7 +21,9 @@ use App\Http\Controllers\ProfessorController;
 Route::get('/profesores', [HomeController::class, 'login_professor']);
 Route::post('/login_professor_submit', [HomeController::class, 'login_professor_submit']);
 Route::get('/profesores/group', [ProfessorController::class, 'group']);
-Route::get('/profesores/team/{id}', [ProfessorController::class, 'group_team']);
+Route::get('/profesores/team/{id}/{paquete_no}', [ProfessorController::class, 'group_team']);
+Route::post('/profesores/change_status', [ProfessorController::class, 'change_status']);
+Route::get('/profesores/logout', [ProfessorController::class, 'logout']);
 
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/home', [HomeController::class, 'home']);

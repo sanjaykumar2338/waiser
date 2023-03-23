@@ -1362,9 +1362,27 @@ ul.prd-tm li::before {
     margin: 10px 0 30px;
 }	
 }
+
+.mobile_filter{
+    display: none;   
+}
+
+.desktop_filter{
+    display: block;   
+}
+
 @media only screen and (max-width:767px){
 a.crt-btn {
     display: block;
+}
+.mobile_filter{
+    display: block;   
+}
+.desktop_filter{
+    display: none;   
+}
+.filter_frm{
+    display: none;
 }
 .intergrante-img img {
     height: 100px;
@@ -1808,4 +1826,19 @@ span.prd-tm {
     font-size: 30px;
 }
 /* End cart popup  */
+}
+
+/*text center class*/
+.intergrante-contnet a .btn-1{
+    background-color: #01539E;
+    color: #fff;
+    padding: 10px 40px;
+    line-height: normal;
+    display: inline-block;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-size: 18px;
+    margin: 15px auto 0;
+    width: 100%;
+    max-width: 100px;
 }
